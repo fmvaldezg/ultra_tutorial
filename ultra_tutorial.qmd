@@ -156,6 +156,8 @@ Paste the YAML front-matter **before** the query text.
 
 ![](./images/ultra-yaml.png){width="420px"}
 
+[02]{.badge .rounded-pill .bg-primary} *Add a custom style*
+
 
 ```{.qml}
 ---
