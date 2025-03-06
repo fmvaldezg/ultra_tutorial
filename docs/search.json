@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "ultra_tutorial.html",
+    "href": "ultra_tutorial.html",
+    "title": "Overpass Ultra Tutorial",
+    "section": "",
+    "text": "Ultra (née Overpass Ultra) is a web-application made to simplify making maps with MapLibre GL JS with data from various file/query types such as Overpass, GeoJSON, GPX, and more.\nDeveloped by Daniel Schep"
+  },
+  {
+    "objectID": "ultra_tutorial.html#what-is-ultra",
+    "href": "ultra_tutorial.html#what-is-ultra",
+    "title": "Overpass Ultra Tutorial",
+    "section": "",
+    "text": "Ultra (née Overpass Ultra) is a web-application made to simplify making maps with MapLibre GL JS with data from various file/query types such as Overpass, GeoJSON, GPX, and more.\nDeveloped by Daniel Schep"
+  },
+  {
+    "objectID": "ultra_tutorial.html#what-is-overpass",
+    "href": "ultra_tutorial.html#what-is-overpass",
+    "title": "Overpass Ultra Tutorial",
+    "section": "2 What is Overpass?",
+    "text": "2 What is Overpass?\n\nThe Overpass API is a read-only service that lets users retrieve specific OpenStreetMap (OSM) data based on custom queries.\nUnlike OSM’s main API, which focuses on editing, Overpass is optimized for data retrieval, handling anything from a few elements to millions in minutes.\nUsers can filter data by location, object type, tags, and more. Overpass Ultra, a web-based tool, helps with query creation.\nRefer to the user manual and Overpass QL guide for details."
+  },
+  {
+    "objectID": "ultra_tutorial.html#building-an-overpass-query",
+    "href": "ultra_tutorial.html#building-an-overpass-query",
+    "title": "Overpass Ultra Tutorial",
+    "section": "3 Building an overpass query",
+    "text": "3 Building an overpass query\nIn this step-by-step tutorial we will learn how to create, style and share a map in Ultra.\nWe will be creating an interactive map of all recreation areas in Philadelphia.\n01 Open a new map in Ultra\nGo to https://overpass-ultra.us/.\nThe first time you open the web you will see a default map like this:\n\n02 Type your query\nA query is a way to filter and retrieve data from OpenStreetMap. It allows you to search for specific types of map features.\nQueries in Ultra follow the strcuture of the Overpass API.\nIf you are not familiar with OpenStreetMap data, see the info window below:\n\n\n\n\n\n\nHow data is organized in OSM?\n\n\n\n\n\nAll data in OSM is represented by an element.\nAn element can be either a node , a way  or a relation .\nEach element is described using tags which are the combination of a key and a value .\nFor example, a coffee shop is represented by an element type node with tags amenity=cafe.\nLearn more about elements and tags here.\n\n\n\nThe ‘anatomy’ of a query: Hover over the numbers on the right in the code to reveal what each line on the query does\nThe following is the default query you see when you open Ultra for the first time:\n1/*\nThis is an example Overpass query.\nTry it out by pressing the Run button above!\n*/\n2[bbox:{{bbox}}];\n(                                               \n3way[highway=path];\nway[highway=footway];\nway[highway=cycleway];\nway[highway=steps];\n4);\n5out geom;\n\n1\n\nThis is a comment. Everithing inside /*  */ will not be considered in teh query.\n\n2\n\nThis lines defines a bbox which limits the query to what you are viewing on the map.\n\n3\n\nThis line retrieves an element type way that has the key highway and value path.\n\n4\n\nAll single queries within the () are grouped together.\n\n5\n\nThe output format for your query. In this case geom returns the actual shape of the features.\n\n\nFor this example we will use the following query.\nAs there are different types of recreational areas, we will be using a group of three queries with different combinations of value for the key leisure. We will be quering elements tagged: \"leisure\":\"park\", \"leisure\":\"playground\" and \"leisure\":\"garden\". There are more tags that can describe this areas. Explore your own case study in OSM.\n\n\n\n\n\n\nNote\n\n\n\nRemember to zoom in to your ineterest area. Keep your query area small to retrieve data faster.\n\n\n6[bbox:{{bbox}}];\n7(\n8nwr[leisure=\"park\"];\n9nwr[leisure=\"playground\"];\n10nwr[leisure=\"garden\"];\n);\n11out geom;\n\n6\n\nWe will keep the [bbox:{{bbox}}]; line to filter the query to the map view.\n\n7\n\nHere we start our grouped query. As there are different types of areas, we will be using three values.\n\n8\n\nOne way to tag recreational areas is leisure:\"park\". Note that we use nwr to get any node, way or relation.\n\n9\n\nOur second query is leisure:\"playground\".\n\n10\n\nThe third type we are quering is leisure:\"garden\".\n\n11\n\nWe close our query retrieving the geomtery of the elements.\n\n\n03 Run your query\nCopy and paste this query in Ultra’s query window, and then click ‘Run’ \n\nAfter some seconds you will see the results display on the map. All results are shown in yellow. In the next steps we will learn how to style the results.\nLearn more on how to build a query here"
+  },
+  {
+    "objectID": "ultra_tutorial.html#styling-in-ultra",
+    "href": "ultra_tutorial.html#styling-in-ultra",
+    "title": "Overpass Ultra Tutorial",
+    "section": "4 Styling in Ultra",
+    "text": "4 Styling in Ultra\nIn Ultra, you can style the map elements by adding a style: key on a YAML front-matter. This YAML front-matter is a way to add metadata to the query file. All these will be read by Maplibre and Ultra when rendering your resulting map.\n01 Add a title and description\nThe YAML front-matter has to be framed inside ---, just like in the example below.\n1---\n2title: Recreational areas in Philadelphia\n3description: Map of all recreational areas in the city of Philadelphia\n4---\n\n1\n\nOpening the YAML front-matter text.\n\n2\n\nTitle property to be incldued.\n\n3\n\nDescription text to be included.\n\n4\n\nClosing line of the YAML front-matter.\n\n\nCopy and paste (or type) the YAML front-matter with the title and description properties into the Ultra query we created in the previous section.\nPaste the YAML front-matter before the query text."
+  },
+  {
+    "objectID": "ultra_tutorial.html#adding-interactivity-to-the-map",
+    "href": "ultra_tutorial.html#adding-interactivity-to-the-map",
+    "title": "Overpass Ultra Tutorial",
+    "section": "5 Adding interactivity to the map",
+    "text": "5 Adding interactivity to the map"
+  },
+  {
+    "objectID": "ultra_tutorial.html#sharing-you-ultra-map",
+    "href": "ultra_tutorial.html#sharing-you-ultra-map",
+    "title": "Overpass Ultra Tutorial",
+    "section": "6 Sharing you ultra map",
+    "text": "6 Sharing you ultra map"
+  },
+  {
+    "objectID": "ultra_tutorial.html#attribution",
+    "href": "ultra_tutorial.html#attribution",
+    "title": "Overpass Ultra Tutorial",
+    "section": "Attribution",
+    "text": "Attribution\n\n\nOpen Geospatial Data by Felipe Valdez is licensed under CC BY-NC-SA 4.0"
+  }
+]

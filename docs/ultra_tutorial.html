@@ -58,37 +58,75 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="ultra_tutorial_files/libs/clipboard/clipboard.min.js"></script>
-<script src="ultra_tutorial_files/libs/quarto-html/quarto.js"></script>
-<script src="ultra_tutorial_files/libs/quarto-html/popper.min.js"></script>
-<script src="ultra_tutorial_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="ultra_tutorial_files/libs/quarto-html/anchor.min.js"></script>
-<link href="ultra_tutorial_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="ultra_tutorial_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="ultra_tutorial_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="ultra_tutorial_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="ultra_tutorial_files/libs/bootstrap/bootstrap-c0367b04c37547644fece4185067e4a7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-79108a0fc1995748cbd19a5b0e3e3e7c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
 
 
 </head>
 
 <body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contents</h2>
    
   <ul>
   <li><a href="#what-is-ultra" id="toc-what-is-ultra" class="nav-link active" data-scroll-target="#what-is-ultra"><span class="header-section-number">1</span> What is Ultra?</a></li>
   <li><a href="#what-is-overpass" id="toc-what-is-overpass" class="nav-link" data-scroll-target="#what-is-overpass"><span class="header-section-number">2</span> What is Overpass?</a></li>
   <li><a href="#building-an-overpass-query" id="toc-building-an-overpass-query" class="nav-link" data-scroll-target="#building-an-overpass-query"><span class="header-section-number">3</span> Building an overpass query</a></li>
-  <li><a href="#styling-in-ultra" id="toc-styling-in-ultra" class="nav-link" data-scroll-target="#styling-in-ultra"><span class="header-section-number">4</span> Styling in ultra</a></li>
+  <li><a href="#styling-in-ultra" id="toc-styling-in-ultra" class="nav-link" data-scroll-target="#styling-in-ultra"><span class="header-section-number">4</span> Styling in Ultra</a></li>
   <li><a href="#adding-interactivity-to-the-map" id="toc-adding-interactivity-to-the-map" class="nav-link" data-scroll-target="#adding-interactivity-to-the-map"><span class="header-section-number">5</span> Adding interactivity to the map</a></li>
   <li><a href="#sharing-you-ultra-map" id="toc-sharing-you-ultra-map" class="nav-link" data-scroll-target="#sharing-you-ultra-map"><span class="header-section-number">6</span> Sharing you ultra map</a></li>
+  
   </ul>
-<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ultra_tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="ultra_tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
-</div>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ultra_tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -199,6 +237,7 @@ How data is organized in OSM?
 </dd>
 </dl>
 <p>For this example we will use the following query.</p>
+<p>As there are different types of recreational areas, we will be using a group of three queries with different combinations of value for the key <code>leisure</code>. We will be quering elements tagged: <code>"leisure":"park"</code>, <code>"leisure":"playground"</code> and <code>"leisure":"garden"</code>. There are more tags that can describe this areas. Explore your own case study in <a href="openstreetmap.org">OSM</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -213,22 +252,78 @@ Note
 </div>
 </div>
 <div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode numberSource qml numberLines code-annotation-code code-with-copy code-annotated"><code class="sourceCode qml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a>[bbox<span class="op">:</span>{{bbox}}]<span class="op">;</span></span>
-<span id="annotated-cell-2-2"><a href="#annotated-cell-2-2"></a>(                                               </span>
-<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3"></a>way[highway<span class="op">=</span>path]<span class="op">;</span></span>
-<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a>way[highway<span class="op">=</span>footway]<span class="op">;</span></span>
-<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5"></a>way[highway<span class="op">=</span>cycleway]<span class="op">;</span></span>
-<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>way[highway<span class="op">=</span>steps]<span class="op">;</span></span>
-<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7"></a>)<span class="op">;</span></span>
-<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8"></a>out geom<span class="op">;</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="7">7</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2"></a>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="8">8</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3"></a>nwr[leisure<span class="op">=</span><span class="st">"park"</span>]<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="9">9</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4"></a>nwr[leisure<span class="op">=</span><span class="st">"playground"</span>]<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="10">10</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5"></a>nwr[leisure<span class="op">=</span><span class="st">"garden"</span>]<span class="op">;</span></span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>)<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="11">11</button><span id="annotated-cell-2-7" class="code-annotation-target"><a href="#annotated-cell-2-7"></a>out geom<span class="op">;</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
 <dd>
 <span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="6">We will keep the <code>[bbox:{{bbox}}];</code> line to filter the query to the map view.</span>
 </dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="7">Here we start our grouped query. As there are different types of areas, we will be using three values.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="8">One way to tag recreational areas is <code>leisure:"park"</code>. Note that we use <code>nwr</code> to get any <code>node</code>, <code>way</code> or <code>relation</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="9">Our second query is <code>leisure:"playground"</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="10">The third type we are quering is <code>leisure:"garden"</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="7" data-code-annotation="11">We close our query retrieving the geomtery of the elements.</span>
+</dd>
 </dl>
+<p><span class="badge rounded-pill bg-primary">03</span> <em>Run your query</em></p>
+<p>Copy and paste this query in Ultra’s query window, and then click ‘Run’ <img src="./images/ultra-run.png" class="img-fluid"></p>
+<p><img src="./images/ultra-screen2.png" class="img-fluid"></p>
+<p>After some seconds you will see the results display on the map. All results are shown in yellow. In the next steps we will learn how to style the results.</p>
+<p>Learn more on how to build a query <a href="">here</a></p>
 </section>
 <section id="styling-in-ultra" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="styling-in-ultra"><span class="header-section-number">4</span> Styling in ultra</h2>
+<h2 data-number="4" class="anchored" data-anchor-id="styling-in-ultra"><span class="header-section-number">4</span> Styling in Ultra</h2>
+<p>In Ultra, you can style the map elements by adding a <code>style:</code> key on a YAML front-matter. This YAML front-matter is a way to add metadata to the query file. All these will be read by Maplibre and Ultra when rendering your resulting map.</p>
+<p><span class="badge rounded-pill bg-primary">01</span> <em>Add a title and description</em></p>
+<p>The YAML front-matter has to be framed inside <code>---</code>, just like in the example below.</p>
+<div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode xml code-annotation-code code-with-copy code-annotated"><code class="sourceCode xml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a>---</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a>title: Recreational areas in Philadelphia</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a>description: Map of all recreational areas in the city of Philadelphia</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a>---</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">Opening the YAML front-matter text.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="2">Title property to be incldued.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="3">Description text to be included.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="4" data-code-annotation="4">Closing line of the YAML front-matter.</span>
+</dd>
+</dl>
+<p>Copy and paste (or type) the YAML front-matter with the title and description properties into the Ultra query we created in the previous section.</p>
+<p>Paste the YAML front-matter <strong>before</strong> the query text.</p>
+<p><img src="./images/ultra-yaml.png" class="img-fluid" width="420"></p>
+<!--```{=html}
+<iframe width="780" height="500" src="https://overpass-ultra.us/#map&m=11.73/39.9686/-75.1661&q=NoIxHsA8C4G9bFAvkgugbgFAApMDsB3AJ2ACIAbAUwEsBnAVyMtIF5SAHAQyIGtSN8xYFTqNKbduU4BPAOZFw9PABN+WQiREMmbWd2WU8azAEosigC4ACWZXABbdEA" title="Quarto Documentation"></iframe>
+```
+-->
 </section>
 <section id="adding-interactivity-to-the-map" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="adding-interactivity-to-the-map"><span class="header-section-number">5</span> Adding interactivity to the map</h2>
@@ -237,8 +332,15 @@ Note
 <h2 data-number="6" class="anchored" data-anchor-id="sharing-you-ultra-map"><span class="header-section-number">6</span> Sharing you ultra map</h2>
 </section>
 
-</main>
-<!-- /main column -->
+
+<div id="quarto-appendix" class="default"><section id="attribution" class="level2 appendix unnumbered"><h2 class="anchored quarto-appendix-heading">Attribution</h2><div class="quarto-appendix-contents">
+
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" href="http://felipevaldez.com/kobotoolbox_tutorial/">Open Geospatial Data</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://felipevaldez.com/">Felipe Valdez</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a>
+</p>
+
+
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
