@@ -7,6 +7,7 @@ toc: true
 toc-title: Contents
 toc-depth: 3
 number-sections: true
+code-annotations: hover
 format: 
   html: default
   pdf: default
@@ -16,5 +17,106 @@ format-links:
     icon: file-pdf
 ---
 
-## What is Overpass Ultra?
+## What is Ultra?
 
+![](./images/ultra-logo.png){width=150px}
+
+[Ultra](https://overpass-ultra.us/docs/) (née Overpass Ultra) is a web-application made to simplify making maps with [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) with data from various file/query types such as Overpass, GeoJSON, GPX, and more.
+
+Developed by [Daniel Schep](https://schep.me/)
+
+## What is Overpass?
+
+![](./images/overpass_logo.png){width=300px}
+
+The [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) is a read-only service that lets users retrieve specific [OpenStreetMap](https://www.openstreetmap.org/) (OSM) data based on custom queries. 
+
+Unlike OSM’s main API, which focuses on editing, Overpass is optimized for data retrieval, handling anything from a few elements to millions in minutes. 
+
+Users can filter data by location, object type, tags, and more. Overpass Ultra, a web-based tool, helps with query creation. 
+
+Refer to the [user manual](https://dev.overpass-api.de/overpass-doc/en/) and [Overpass QL guide](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL) for details.
+
+## Building an overpass query
+
+In this step-by-step tutorial we will learn how to create, style and share a map in Ultra.
+
+We will be creating an interactive map of all recreation areas in Philadelphia.
+
+[01]{.badge .rounded-pill .bg-primary} *Open a new map in Ultra*
+
+Go to [https://overpass-ultra.us/](https://overpass-ultra.us/).
+
+The first time you open the web you will see a default map like this:
+
+![](./images/ultra-screen1.png)
+
+[02]{.badge .rounded-pill .bg-primary} *Type your query*
+
+A `query` is a way to filter and retrieve data from OpenStreetMap. It allows you to search for specific types of map features.
+
+Queries in Ultra follow the strcuture of the [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API).
+
+If you are not familiar with OpenStreetMap data, see the info window below:
+
+::: {.callout-caution collapse="true"}
+## How data is organized in OSM?
+All data in OSM is represented by an **element.**
+
+An **element** can be either a `node` ![](./images/Osm_element_node.png){width="3%" height="auto"}, a `way` ![](./images/Osm_element_way.png){width="3%" height="auto"} or a `relation` ![](./images/Osm_element_relation.png){width="3%" height="auto"}.
+
+Each element is described using `tags` which are the combination of a `key` and a `value` ![](./images/Mf_tag.png){width="30px" height="30px" style="background-color: white; padding: 0px"}.
+
+For example, a coffee shop is represented by an element type `node` with tags `amenity=cafe`.
+
+Learn more about elements and tags [here.](https://wiki.openstreetmap.org/wiki/Elements)
+:::
+
+**The 'anatomy' of a query:** *Hover over the numbers on the right in the code to reveal what each line on the query does*
+
+The following is the default query you see when you open Ultra for the first time:
+
+```qml {code-line-numbers="true" code-copy="false"}
+/*                                              #<1>
+This is an example Overpass query.              #<1>
+Try it out by pressing the Run button above!    #<1>
+*/                                              #<1>
+[bbox:{{bbox}}];                                #<2>
+(                                               
+way[highway=path];                              #<3>
+way[highway=footway];
+way[highway=cycleway];
+way[highway=steps];
+);                                              #<4>
+out geom;                                       #<5>
+```
+1. This is a comment. Everithing inside `/*  */` will not be considered in teh query.
+2. This lines defines a `bbox` which limits the query to what you are viewing on the map.
+3. This line retrieves an element type `way` that has the key `highway` and value `path`.
+4. All single queries within the `()` are grouped together.
+5. The output format for your query. In this case `geom` returns the actual shape of the features.
+
+For this example we will use the following query.
+
+::: {.callout-note}
+**Remember** to zoom in to your ineterest area. Keep your query area small to retrieve data faster.
+:::
+
+```{.qml .numberLines}
+[bbox:{{bbox}}];                                #<6>
+(                                               
+way[highway=path];                              #<3>
+way[highway=footway];
+way[highway=cycleway];
+way[highway=steps];
+);                                              #<4>
+out geom;                                       #<5>
+```
+6. We will keep the `[bbox:{{bbox}}];` line to filter the query to the map view.
+
+
+## Styling in ultra
+
+## Adding interactivity to the map
+
+## Sharing you ultra map
