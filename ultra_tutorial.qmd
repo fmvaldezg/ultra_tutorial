@@ -157,6 +157,32 @@ Paste the YAML front-matter **before** the query text.
 ![](./images/ultra-yaml.png){width="420px"}
 
 
+```{.qml}
+---
+title: Recreational areas in Philadelphia
+description: Map of all recreational areas in the city of Philadelphia
+style:
+  layers:
+    - type: fill
+      paint:
+        fill-color:
+          - case
+          - [ ==, [ get, leisure ], "park" ]
+          - rgb(159, 247, 7) # green
+          - [ ==, [ get, leisure ], "playground" ]
+          - rgb(80, 163, 91) # dark gren
+          - [ ==, [ get, leisure ], "garden" ]
+          - rgb(181, 159, 16) # brown
+          - rgb(0, 0, 0)
+---
+[bbox:{{bbox}}];
+(
+  nwr[leisure=park];
+  nwr[leisure=playground];
+  nwr[leisure=garden];
+);
+out geom;
+```
 
 <!--```{=html}
 <iframe width="780" height="500" src="https://overpass-ultra.us/#map&m=11.73/39.9686/-75.1661&q=NoIxHsA8C4G9bFAvkgugbgFAApMDsB3AJ2ACIAbAUwEsBnAVyMtIF5SAHAQyIGtSN8xYFTqNKbduU4BPAOZFw9PABN+WQiREMmbWd2WU8azAEosigC4ACWZXABbdEA" title="Quarto Documentation"></iframe>
