@@ -37,6 +37,12 @@ Users can filter data by location, object type, tags, and more. Overpass Ultra, 
 
 Refer to the [user manual](https://dev.overpass-api.de/overpass-doc/en/) and [Overpass QL guide](https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL) for details.
 
+**Resulting map from this tutorial**
+
+```{=html}
+<iframe width="100%" height="600" src="https://overpass-ultra.us/#map&m=13.07/39.9596/-75.1743&q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA" title="Map result"></iframe>
+```
+
 ## Building an overpass query
 
 In this step-by-step tutorial we will learn how to create, style and share a map in Ultra.
@@ -139,7 +145,7 @@ In Ultra, you can style the map elements by adding a `style:` key on a YAML fron
 
 The YAML front-matter has to be framed inside `---`, just like in the example below.
 
-```{.xml}
+```{.xml .numberLines}
 --- #<1>
 title: Recreational areas in Philadelphia #<2>
 description: Map of all recreational areas in the city of Philadelphia #<3>
@@ -158,24 +164,53 @@ Paste the YAML front-matter **before** the query text.
 
 [02]{.badge .rounded-pill .bg-primary} *Add a custom style*
 
+Styling is possible in Ultra within the YAML front-matter. A `style` is a series of rules on how to visually render a map, what elements are drawn and which colors, icons, sizes, and more to use.
 
-```{.qml}
+Ultra uses the [Maplibre Style Spec](https://maplibre.org/maplibre-style-spec/). This style is specified by `properties`.
+
+In this section we describe some of the basic `properties` needed to create a custom style.
+
+The first step is to add `style:` to the YAML front-matter. You can tyoe it right after the `description:` property.
+
+We will assign colors to the polygons we obtained from the query. For that we will add a layer of type fill (polygon) with `- type: fill`. There are other types of layers you can add: 'background', 'circle', 'heatmap', 'fill-extrusion', 'line', 'symbol'. Each serves different purposes and works for specific elements, if it is a point, for example, you might use type:symbol.
+
+Then we specify the property of our layer of type 'fill' we want to modify. 
+
+We add `fill-color:` to change the color of our polygons. Each layer type has its own properties that can be modified. See [Layes](https://maplibre.org/maplibre-style-spec/layers/#fill) on the Maplibre Style Spec documentation.
+
+[03]{.badge .rounded-pill .bg-primary} *Add conditionals to assign colors based on the feature properties*
+
+Since we want to color each type of recreational area with a different color, we are using `- case` (line 9) to introduce conditions. We type a conditional statement followed by a specific color for each type of recreational area.
+
+On line 10 of the example code we add `[get, leisure]` to select the tag `leisure` from the proeprties. Then we ask for those elements that have `"park"` as the value for that tag. The `==` symbol states this.
+
+On line 11, we specify the color we want to assign to the polygons with tag `leisure=park`. The colors can be specified using the 'rgb' (red, green, blue) format. You can use tools like [Google Color Picker](https://www.google.com/search?q=google+color+picker&oq=google+color&gs_lcrp=EgZjaHJvbWUqDQgFEAAYgwEYsQMYgAQyEAgAEAAYkQIYsQMYgAQYigUyBggBEEUYOTINCAIQABiRAhiABBiKBTINCAMQABiRAhiABBiKBTINCAQQABiRAhiABBiKBTINCAUQABiDARixAxiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABNIBCDYyODBqMGo5qAIAsAIB&sourceid=chrome&ie=UTF-8) to know the 'rgb' code of a color.
+
+Lines 12 to 15 on the sample code contain the same conditional + color for the other two types of recreational areas: playground and garden.
+
+On line 16 we introduce a fallback color. This color will be assigned to polygons that do not satisfy the conditions in our `case`. You always need to assign a fallback color in Maplibre Style Spec.
+
+[04]{.badge .rounded-pill .bg-primary} *Run the query again*
+
+Copy and paste the sample code below on your Ultra map and run the query again.
+
+```{.qml .numberLines}
 ---
 title: Recreational areas in Philadelphia
 description: Map of all recreational areas in the city of Philadelphia
-style:
-  layers:
-    - type: fill
-      paint:
-        fill-color:
-          - case
-          - [ ==, [ get, leisure ], "park" ]
-          - rgb(159, 247, 7) # green
-          - [ ==, [ get, leisure ], "playground" ]
-          - rgb(80, 163, 91) # dark gren
-          - [ ==, [ get, leisure ], "garden" ]
-          - rgb(181, 159, 16) # brown
-          - rgb(0, 0, 0)
+style:                                                        #<1>
+  layers:                                                     #<2>
+    - type: fill                                              #<3>
+      paint:                                                  #<4>
+        fill-color:                                           #<5>
+          - case                                              #<6>
+          - [ ==, [ get, leisure ], "park" ]                  #<7>
+          - rgb(159, 247, 7) # green                        #<8>
+          - [ ==, [ get, leisure ], "playground" ]            #<9>
+          - rgb(80, 163, 91) # dark gren                    #<9>
+          - [ ==, [ get, leisure ], "garden" ]                #<9>  
+          - rgb(181, 159, 16) # brown                       #<9>  
+          - rgb(0, 0, 0)                                    #<10>
 ---
 [bbox:{{bbox}}];
 (
@@ -185,6 +220,29 @@ style:
 );
 out geom;
 ```
+1. We start the style section with this line.
+2. The most important property is `layers` which adds something to the map.
+3. We define our layer type as `fill` as we want the polygons to be painted in the map.
+4. There are two main types of properties `paint:` and `layout`.
+5. We define the `fill-color` to be the property we want to modify.
+6. The `case` expression will assign a value to an output of a condition (lines 10 to 15).
+7. We search for features that have `park` as the value of `leisure`.
+8. This color is assigned to those features that satisfy the condition established in the previous line.
+9. We do the same evaluation and assignment for thos features with `playground` (line 13) and `garden` (line 15).
+10. This is the fallback color. This will be assigned if there are features that do not satisfy any of the previous conditions.
+
+![](./images/ultra-screen3.png)
+
+
+[05]{.badge .rounded-pill .bg-primary} *Change the background style*
+
+Ultra comes with a variety of background styles you can choose. To change the style click on the [Pick Style](./images/ultra-pick.png) button on the top menu bar and select any style from the list.
+
+In this example we chose 'Protomaps Light' because it uses shadows of grey for most of the elements, highlighting the vibrant greens we chose for the parks.
+
+![](./images/ultra-screen4.png)
+
+Notice that an extra line is added to the YAML front-matter with the URL of the background style used. You can chose from anny of the styles in Ultra or use your own from a URL pointing to a JSON file.
 
 <!--```{=html}
 <iframe width="780" height="500" src="https://overpass-ultra.us/#map&m=11.73/39.9686/-75.1661&q=NoIxHsA8C4G9bFAvkgugbgFAApMDsB3AJ2ACIAbAUwEsBnAVyMtIF5SAHAQyIGtSN8xYFTqNKbduU4BPAOZFw9PABN+WQiREMmbWd2WU8azAEosigC4ACWZXABbdEA" title="Quarto Documentation"></iframe>
@@ -193,10 +251,169 @@ out geom;
 
 ## Adding interactivity to the map
 
-## Sharing you ultra map
+In this section we explore some additional options to customize your resulting map. From an initial center point and zoom, to adding navigation controls and popup windows.
+
+### Adding an initial center point and zoom level
+
+Ultra allows adding some additional options for your map, equivalent to Maplibre Style Spec [MapOptions](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/MapOptions/).
+
+Adding an inital center point and zoom is helpful to ensure the map starts in the desired location for the viewer.
+
+To add a center point, simply add the following to your query window, after the `description:` property and before the `style:`.
+
+```{.qml}
+options:
+  center: [-75.16342, 39.95500]
+  zoom: 13
+```
+
+The values in this example are centered in the city of Philadelphia, PA.
+
+To know the coordinates and zoom level for a different area you can use the [Mapbox Location Helper](https://labs.mapbox.com/location-helper/). Zoom to the area you want and copy/paste the values on `center(array)` and `zoom`.
+
+![](./images/loc-helper.png)
+
+### Adding navigation controls to the map
+
+Similar as the MapOptions, Ultra allows adding controls to the resulting map. 
+
+In this example we are adding a `NavigationControl` ![](./images/ultra-nav.png){width="30px"}, 
+
+a `GeolocateControl` ![](./images/ultra-loc.png){width="30px"} and an `HTMLControl`.
+
+To add these three controls, just copy and paste the following code lines after the `options:` property and before the `style:` in your query.
+
+```{.qml}
+controls:                             #<1>
+  - type: NavigationControl           #<2>
+    position: top-right               #<3>
+  - type: GeolocateControl            #<4>
+    options:                          #<4>
+      positionOptions:                #<4>
+        enableHighAccuracy: true      #<4>
+      trackUserLocation: true         #<5>
+  - type: HTMLControl                 #<6>
+    options:                          #<6>
+      html: >                         #<7>
+        <h1><center>Green areas in Philadelphia</center></h1> #<8>
+      css: >                          #<9>
+        h1 {                          #<9>
+          position: fixed;            #<9>
+          top: 0;                     #<9>
+          left: 0;                    #<9>
+          right: 0;                   #<9>
+        }                             #<9>
+```
+1. Adding the `controls:` property.
+2. Fist we add a type `NavigationControl`.
+3. Set the position of the control in the map window.
+4. Second we add a `GeolocateControl`.
+5. We enable the option to track the user location.
+6. Third we add the `HTMLControl` to include a title for the map.
+7. Open an html section.
+8. Include the text for the title betwen the `<center> </center>`.
+9. Style the title using css.
+
+::: {.callout-note}
+These options will be visible only when you share the qyery as an interactive map. See section 6 of this tutorial.
+:::
+
+### Customizing the popup window
+
+Finally, another useful option to add is a customized popup window. This window will appear when the viewer clicks or hover the mouse over one of the elements from the query.
+
+Here we add a customized popup window that shows the name and leisure type and will appear when one hovers over the polygon.
+
+Paste the code below under the `description:` property on your query.
+
+```{.qml}
+popupOnHover: true                                      #<1>
+popupTemplate: "{{tags.name}} - {{tags.leisure}}"       #<2>
+```
+1. This activates the popup on hover. The defualt is when click.
+2. We only add the feature `name` and `leisure` type to the popup.
+
+## Complete query for an interactive map
+
+You can copy and paste the code below on your query window. Remember to zoom in to Philadelphia to have the correct bbox for the map configured here. If you are working on a different area of interest, zoom in to that area and change the `center:` and `zoom:` properties on the YAML front-matter before running the query.
+
+```{.qml .numberLines}
+---
+title: Recreational areas in Philadelphia
+description: Map of all recreational areas in the city of Philadelphia
+popupOnHover: true
+popupTemplate: "{{tags.name}} - {{tags.leisure}}"
+options:
+  center: [-75.17474, 39.95880]
+  zoom: 13.83
+controls:
+  - type: NavigationControl
+    position: top-right
+  - type: GeolocateControl
+    options:
+      positionOptions:
+        enableHighAccuracy: true
+      trackUserLocation: true
+  - type: HTMLControl
+    options:
+      html: >
+        <h1><center>Green areas in Philadelphia</center></h1>
+      css: >
+        h1 {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+        }
+style:
+  layers:                                          
+    - type: fill                                                  
+      paint:                                          
+        fill-color:
+          - case
+          - [ ==, [ get, leisure ], "park" ]
+          - rgb(159, 247, 7) # green
+          - [ ==, [ get, leisure ], "playground" ]
+          - rgb(80, 163, 91) # dark gren
+          - [ ==, [ get, leisure ], "garden" ]
+          - rgb(181, 159, 16) # brown
+          - rgb(0, 0, 0)
+  extends: https://styles.trailsta.sh/protomaps-light.json
+---
+[bbox:{{bbox}}];
+(
+  nwr[leisure=park];
+  nwr[leisure=playground];
+  nwr[leisure=garden];
+);
+out geom;
+```
+![Resulting Query Map](./images/ultra-result1.png)
 
 
+## Sharing you Ultra map
 
+The last step is to share your resulting map. 
+
+There are mutliple ways you can share it online, as a query or an interactive map.
+
+[01]{.badge .rounded-pill .bg-primary} *Click on Share*
+
+Click on the Share ![](./images/ultra-share.png){height="30px"}
+
+[02]{.badge .rounded-pill .bg-primary} *Select how you want to share*
+
+In the new window, select how you want to share the map.
+
+![](./images/ultra-share2.png){width="300px"}
+
+1. If you select to share as query, the link will open the map and query with all actions.
+
+![](./images/ultra-result1.png)
+
+2. If you select to share as an interactive map, the link will open a mapview only, without the query window on the side.
+
+![](./images/ultra-result2.png)
 
 ## Attribution {.appendix .unnumbered}
 
