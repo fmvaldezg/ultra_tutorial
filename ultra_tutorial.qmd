@@ -1,5 +1,5 @@
 ---
-title: "Overpass Ultra Tutorial"
+title: "Ultra (Overpass Ultra) Tutorial"
 author:
   name: Felipe Valdez
   url: https://felipevaldez.com
@@ -19,7 +19,7 @@ format:
 
 ## What is Ultra?
 
-![](./images/ultra-logo.png){width=150px}
+![](./images/ultra-logo.png){width=100px}
 
 [Ultra](https://overpass-ultra.us/docs/) (née Overpass Ultra) is a web-application made to simplify making maps with [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) with data from various file/query types such as Overpass, GeoJSON, GPX, and more.
 
@@ -27,7 +27,7 @@ Developed by [Daniel Schep](https://schep.me/)
 
 ## What is Overpass?
 
-![](./images/overpass_logo.png){width=300px}
+![](./images/overpass_logo.png){width=250px}
 
 The [Overpass API](https://wiki.openstreetmap.org/wiki/Overpass_API) is a read-only service that lets users retrieve specific [OpenStreetMap](https://www.openstreetmap.org/) (OSM) data based on custom queries. 
 
@@ -42,7 +42,7 @@ Refer to the [user manual](https://dev.overpass-api.de/overpass-doc/en/) and [Ov
 ```{=html}
 <iframe width="100%" height="600" src="https://overpass-ultra.us/#map&m=13.07/39.9596/-75.1743&q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA" title="Map result"></iframe>
 ```
-
+[Open the resulting map in a new window](https://overpass-ultra.us/#map&m=13.07/39.9596/-75.1743&q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA)
 ## Building an overpass query
 
 In this step-by-step tutorial we will learn how to create, style and share a map in Ultra.
