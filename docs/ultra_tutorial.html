@@ -118,15 +118,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#what-is-ultra" id="toc-what-is-ultra" class="nav-link active" data-scroll-target="#what-is-ultra"><span class="header-section-number">1</span> What is Ultra?</a></li>
   <li><a href="#what-is-overpass" id="toc-what-is-overpass" class="nav-link" data-scroll-target="#what-is-overpass"><span class="header-section-number">2</span> What is Overpass?</a></li>
-  <li><a href="#styling-in-ultra" id="toc-styling-in-ultra" class="nav-link" data-scroll-target="#styling-in-ultra"><span class="header-section-number">3</span> Styling in Ultra</a></li>
-  <li><a href="#adding-interactivity-to-the-map" id="toc-adding-interactivity-to-the-map" class="nav-link" data-scroll-target="#adding-interactivity-to-the-map"><span class="header-section-number">4</span> Adding interactivity to the map</a>
+  <li><a href="#building-an-overpass-query" id="toc-building-an-overpass-query" class="nav-link" data-scroll-target="#building-an-overpass-query"><span class="header-section-number">3</span> Building an overpass query</a></li>
+  <li><a href="#styling-in-ultra" id="toc-styling-in-ultra" class="nav-link" data-scroll-target="#styling-in-ultra"><span class="header-section-number">4</span> Styling in Ultra</a></li>
+  <li><a href="#adding-interactivity-to-the-map" id="toc-adding-interactivity-to-the-map" class="nav-link" data-scroll-target="#adding-interactivity-to-the-map"><span class="header-section-number">5</span> Adding interactivity to the map</a>
   <ul class="collapse">
-  <li><a href="#adding-an-initial-center-point-and-zoom-level" id="toc-adding-an-initial-center-point-and-zoom-level" class="nav-link" data-scroll-target="#adding-an-initial-center-point-and-zoom-level"><span class="header-section-number">4.1</span> Adding an initial center point and zoom level</a></li>
-  <li><a href="#adding-navigation-controls-to-the-map" id="toc-adding-navigation-controls-to-the-map" class="nav-link" data-scroll-target="#adding-navigation-controls-to-the-map"><span class="header-section-number">4.2</span> Adding navigation controls to the map</a></li>
-  <li><a href="#customizing-the-popup-window" id="toc-customizing-the-popup-window" class="nav-link" data-scroll-target="#customizing-the-popup-window"><span class="header-section-number">4.3</span> Customizing the popup window</a></li>
+  <li><a href="#adding-an-initial-center-point-and-zoom-level" id="toc-adding-an-initial-center-point-and-zoom-level" class="nav-link" data-scroll-target="#adding-an-initial-center-point-and-zoom-level"><span class="header-section-number">5.1</span> Adding an initial center point and zoom level</a></li>
+  <li><a href="#adding-navigation-controls-to-the-map" id="toc-adding-navigation-controls-to-the-map" class="nav-link" data-scroll-target="#adding-navigation-controls-to-the-map"><span class="header-section-number">5.2</span> Adding navigation controls to the map</a></li>
+  <li><a href="#customizing-the-popup-window" id="toc-customizing-the-popup-window" class="nav-link" data-scroll-target="#customizing-the-popup-window"><span class="header-section-number">5.3</span> Customizing the popup window</a></li>
   </ul></li>
-  <li><a href="#complete-query-for-an-interactive-map" id="toc-complete-query-for-an-interactive-map" class="nav-link" data-scroll-target="#complete-query-for-an-interactive-map"><span class="header-section-number">5</span> Complete query for an interactive map</a></li>
-  <li><a href="#sharing-you-ultra-map" id="toc-sharing-you-ultra-map" class="nav-link" data-scroll-target="#sharing-you-ultra-map"><span class="header-section-number">6</span> Sharing you Ultra map</a></li>
+  <li><a href="#complete-query-for-an-interactive-map" id="toc-complete-query-for-an-interactive-map" class="nav-link" data-scroll-target="#complete-query-for-an-interactive-map"><span class="header-section-number">6</span> Complete query for an interactive map</a></li>
+  <li><a href="#sharing-you-ultra-map" id="toc-sharing-you-ultra-map" class="nav-link" data-scroll-target="#sharing-you-ultra-map"><span class="header-section-number">7</span> Sharing you Ultra map</a></li>
   
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ultra_tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
@@ -163,7 +164,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="1" class="anchored" data-anchor-id="what-is-ultra"><span class="header-section-number">1</span> What is Ultra?</h2>
 <p><img src="./images/ultra-logo.png" class="img-fluid" width="100"></p>
 <p><a href="https://overpass-ultra.us/docs/">Ultra</a> (née Overpass Ultra) is a web-application made to simplify making maps with <a href="https://maplibre.org/maplibre-gl-js/docs/">MapLibre GL JS</a> with data from various file/query types such as Overpass, GeoJSON, GPX, and more.</p>
-<p>Developed by <a href="https://schep.me/">Daniel Schep</a></p>
 </section>
 <section id="what-is-overpass" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="what-is-overpass"><span class="header-section-number">2</span> What is Overpass?</h2>
@@ -174,7 +174,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Refer to the <a href="https://dev.overpass-api.de/overpass-doc/en/">user manual</a> and <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL">Overpass QL guide</a> for details.</p>
 <p><strong>Resulting map from this tutorial</strong></p>
 <iframe width="100%" height="600" src="https://overpass-ultra.us/#map&amp;m=13.07/39.9596/-75.1743&amp;q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA" title="Map result"></iframe>
-<p><a href="https://overpass-ultra.us/#map&amp;m=13.07/39.9596/-75.1743&amp;q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA">Open the resulting map in a new window</a> ## Building an overpass query</p>
+<p><a href="https://overpass-ultra.us/#map&amp;m=13.07/39.9596/-75.1743&amp;q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA">Open the resulting map in a new window</a></p>
+</section>
+<section id="building-an-overpass-query" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="building-an-overpass-query"><span class="header-section-number">3</span> Building an overpass query</h2>
 <p>In this step-by-step tutorial we will learn how to create, style and share a map in Ultra.</p>
 <p>We will be creating an interactive map of all recreation areas in Philadelphia.</p>
 <p><span class="badge rounded-pill bg-primary">01</span> <em>Open a new map in Ultra</em></p>
@@ -295,8 +298,8 @@ Note
 <p>After some seconds you will see the results display on the map. All results are shown in yellow. In the next steps we will learn how to style the results.</p>
 <p>Learn more on how to build a query <a href="">here</a></p>
 </section>
-<section id="styling-in-ultra" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="styling-in-ultra"><span class="header-section-number">3</span> Styling in Ultra</h2>
+<section id="styling-in-ultra" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="styling-in-ultra"><span class="header-section-number">4</span> Styling in Ultra</h2>
 <p>In Ultra, you can style the map elements by adding a <code>style:</code> key on a YAML front-matter. This YAML front-matter is a way to add metadata to the query file. All these will be read by Maplibre and Ultra when rendering your resulting map.</p>
 <p><span class="badge rounded-pill bg-primary">01</span> <em>Add a title and description</em></p>
 <p>The YAML front-matter has to be framed inside <code>---</code>, just like in the example below.</p>
@@ -418,11 +421,11 @@ Note
 ```
 -->
 </section>
-<section id="adding-interactivity-to-the-map" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="adding-interactivity-to-the-map"><span class="header-section-number">4</span> Adding interactivity to the map</h2>
+<section id="adding-interactivity-to-the-map" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="adding-interactivity-to-the-map"><span class="header-section-number">5</span> Adding interactivity to the map</h2>
 <p>In this section we explore some additional options to customize your resulting map. From an initial center point and zoom, to adding navigation controls and popup windows.</p>
-<section id="adding-an-initial-center-point-and-zoom-level" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="adding-an-initial-center-point-and-zoom-level"><span class="header-section-number">4.1</span> Adding an initial center point and zoom level</h3>
+<section id="adding-an-initial-center-point-and-zoom-level" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="adding-an-initial-center-point-and-zoom-level"><span class="header-section-number">5.1</span> Adding an initial center point and zoom level</h3>
 <p>Ultra allows adding some additional options for your map, equivalent to Maplibre Style Spec <a href="https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/MapOptions/">MapOptions</a>.</p>
 <p>Adding an inital center point and zoom is helpful to ensure the map starts in the desired location for the viewer.</p>
 <p>To add a center point, simply add the following to your query window, after the <code>description:</code> property and before the <code>style:</code>.</p>
@@ -433,8 +436,8 @@ Note
 <p>To know the coordinates and zoom level for a different area you can use the <a href="https://labs.mapbox.com/location-helper/">Mapbox Location Helper</a>. Zoom to the area you want and copy/paste the values on <code>center(array)</code> and <code>zoom</code>.</p>
 <p><img src="./images/loc-helper.png" class="img-fluid"></p>
 </section>
-<section id="adding-navigation-controls-to-the-map" class="level3" data-number="4.2">
-<h3 data-number="4.2" class="anchored" data-anchor-id="adding-navigation-controls-to-the-map"><span class="header-section-number">4.2</span> Adding navigation controls to the map</h3>
+<section id="adding-navigation-controls-to-the-map" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="adding-navigation-controls-to-the-map"><span class="header-section-number">5.2</span> Adding navigation controls to the map</h3>
 <p>Similar as the MapOptions, Ultra allows adding controls to the resulting map.</p>
 <p>In this example we are adding a <code>NavigationControl</code> <img src="./images/ultra-nav.png" class="img-fluid" width="30">,</p>
 <p>a <code>GeolocateControl</code> <img src="./images/ultra-loc.png" class="img-fluid" width="30"> and an <code>HTMLControl</code>.</p>
@@ -510,8 +513,8 @@ Note
 </div>
 </div>
 </section>
-<section id="customizing-the-popup-window" class="level3" data-number="4.3">
-<h3 data-number="4.3" class="anchored" data-anchor-id="customizing-the-popup-window"><span class="header-section-number">4.3</span> Customizing the popup window</h3>
+<section id="customizing-the-popup-window" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="customizing-the-popup-window"><span class="header-section-number">5.3</span> Customizing the popup window</h3>
 <p>Finally, another useful option to add is a customized popup window. This window will appear when the viewer clicks or hover the mouse over one of the elements from the query.</p>
 <p>Here we add a customized popup window that shows the name and leisure type and will appear when one hovers over the polygon.</p>
 <p>Paste the code below under the <code>description:</code> property on your query.</p>
@@ -529,8 +532,8 @@ Note
 </dl>
 </section>
 </section>
-<section id="complete-query-for-an-interactive-map" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="complete-query-for-an-interactive-map"><span class="header-section-number">5</span> Complete query for an interactive map</h2>
+<section id="complete-query-for-an-interactive-map" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="complete-query-for-an-interactive-map"><span class="header-section-number">6</span> Complete query for an interactive map</h2>
 <p>You can copy and paste the code below on your query window. Remember to zoom in to Philadelphia to have the correct bbox for the map configured here. If you are working on a different area of interest, zoom in to that area and change the <code>center:</code> and <code>zoom:</code> properties on the YAML front-matter before running the query.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource qml numberLines code-with-copy"><code class="sourceCode qml"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">---</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>title<span class="op">:</span> Recreational areas <span class="kw">in</span> Philadelphia</span>
@@ -588,8 +591,8 @@ Note
 </figure>
 </div>
 </section>
-<section id="sharing-you-ultra-map" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="sharing-you-ultra-map"><span class="header-section-number">6</span> Sharing you Ultra map</h2>
+<section id="sharing-you-ultra-map" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sharing-you-ultra-map"><span class="header-section-number">7</span> Sharing you Ultra map</h2>
 <p>The last step is to share your resulting map.</p>
 <p>There are mutliple ways you can share it online, as a query or an interactive map.</p>
 <p><span class="badge rounded-pill bg-primary">01</span> <em>Click on Share</em></p>

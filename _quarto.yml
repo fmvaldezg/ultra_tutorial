@@ -1,3 +1,5 @@
 project:
   type: website
+  google-analytics: "G-RC52W8J799"
   output-dir: docs
+  
