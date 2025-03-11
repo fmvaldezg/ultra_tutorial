@@ -1,4 +1,7 @@
 project:
   type: website
   output-dir: docs
+
+website:
+  google-analytics: "G-RC52W8J799"
   
