@@ -17,6 +17,11 @@ format:
     ##icon: file-pdf
 ---
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17343164.svg)](https://doi.org/10.5281/zenodo.17343164)
+
+Cite this tutorial:
+Valdez, Felipe. (2025, March 7). Ultra (overpass ultra) Tutorial v1.0. Zenodo. https://doi.org/10.5281/zenodo.17343164
+
 ## What is Ultra?
 
 ![](./images/ultra-logo.png){width=100px}
