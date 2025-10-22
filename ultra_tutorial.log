@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.22.0 (TeX Live 2025)  (format=lualatex 2025.10.22)  22 OCT 2025 15:45
+This is LuaHBTeX, Version 1.22.0 (TeX Live 2025)  (format=lualatex 2025.10.22)  22 OCT 2025 16:32
  restricted system commands enabled.
 **ultra_tutorial.tex
 (./ultra_tutorial.tex
@@ -1290,6 +1290,6 @@ Here is how much of LuaTeX's memory you used:
    20 hlist, 3 vlist, 6 rule, 7 disc, 3 local_par, 4 dir, 2 math, 55 glue, 10 kern, 16 penalty, 56 glyph, 60 attribute, 81 glue_spec, 60 attribute_list, 3 temp, 1 if_stack, 2 write, 3 pdf_dest, 9 pdf_colorstack nodes
    avail lists: 1:1,2:22,3:1,5:4,8:1,10:4,12:1
  63316 multiletter control sequences out of 65536+600000
- 62 fonts using 19040527 bytes
+ 62 fonts using 19040679 bytes
  108i,6n,114p,11235b,1126s stack positions out of 10000i,1000n,20000p,200000b,200000s
 !  ==> Fatal error occurred, no output PDF file produced!

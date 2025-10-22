@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Felipe Valdez">
+
+<title>Ultra (Overpass Ultra) Tutorial</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ff63373b1067ca6f91cf1456aa1f00a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-RC52W8J799"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-RC52W8J799', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#what-is-ultra" id="toc-what-is-ultra" class="nav-link active" data-scroll-target="#what-is-ultra"><span class="header-section-number">1</span> What is Ultra?</a></li>
+  <li><a href="#what-is-overpass" id="toc-what-is-overpass" class="nav-link" data-scroll-target="#what-is-overpass"><span class="header-section-number">2</span> What is Overpass?</a></li>
+  <li><a href="#building-an-overpass-query" id="toc-building-an-overpass-query" class="nav-link" data-scroll-target="#building-an-overpass-query"><span class="header-section-number">3</span> Building an overpass query</a></li>
+  <li><a href="#styling-in-ultra" id="toc-styling-in-ultra" class="nav-link" data-scroll-target="#styling-in-ultra"><span class="header-section-number">4</span> Styling in Ultra</a></li>
+  <li><a href="#adding-interactivity-to-the-map" id="toc-adding-interactivity-to-the-map" class="nav-link" data-scroll-target="#adding-interactivity-to-the-map"><span class="header-section-number">5</span> Adding interactivity to the map</a>
+  <ul class="collapse">
+  <li><a href="#adding-an-initial-center-point-and-zoom-level" id="toc-adding-an-initial-center-point-and-zoom-level" class="nav-link" data-scroll-target="#adding-an-initial-center-point-and-zoom-level"><span class="header-section-number">5.1</span> Adding an initial center point and zoom level</a></li>
+  <li><a href="#adding-navigation-controls-to-the-map" id="toc-adding-navigation-controls-to-the-map" class="nav-link" data-scroll-target="#adding-navigation-controls-to-the-map"><span class="header-section-number">5.2</span> Adding navigation controls to the map</a></li>
+  <li><a href="#customizing-the-popup-window" id="toc-customizing-the-popup-window" class="nav-link" data-scroll-target="#customizing-the-popup-window"><span class="header-section-number">5.3</span> Customizing the popup window</a></li>
+  </ul></li>
+  <li><a href="#complete-query-for-an-interactive-map" id="toc-complete-query-for-an-interactive-map" class="nav-link" data-scroll-target="#complete-query-for-an-interactive-map"><span class="header-section-number">6</span> Complete query for an interactive map</a></li>
+  <li><a href="#sharing-you-ultra-map" id="toc-sharing-you-ultra-map" class="nav-link" data-scroll-target="#sharing-you-ultra-map"><span class="header-section-number">7</span> Sharing you Ultra map</a></li>
+  
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="ultra_tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ultra (Overpass Ultra) Tutorial</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p><a href="https://felipevaldez.com">Felipe Valdez</a> </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://doi.org/10.5281/zenodo.17343164"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17343164.svg" class="img-fluid figure-img"></a></p>
+<figcaption>DOI</figcaption>
+</figure>
+</div>
+<p>Cite this tutorial: Valdez, Felipe. (2025, March 7). Ultra (overpass ultra) Tutorial v1.0. Zenodo. https://doi.org/10.5281/zenodo.17343164</p>
+<section id="what-is-ultra" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="what-is-ultra"><span class="header-section-number">1</span> What is Ultra?</h2>
+<p><img src="./images/ultra-logo.png" class="img-fluid" width="100"></p>
+<p><a href="https://overpass-ultra.us/docs/">Ultra</a> (née Overpass Ultra) is a web-application made to simplify making maps with <a href="https://maplibre.org/maplibre-gl-js/docs/">MapLibre GL JS</a> with data from various file/query types such as Overpass, GeoJSON, GPX, and more.</p>
+</section>
+<section id="what-is-overpass" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="what-is-overpass"><span class="header-section-number">2</span> What is Overpass?</h2>
+<p><img src="./images/overpass_logo.png" class="img-fluid" width="250"></p>
+<p>The <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a> is a read-only service that lets users retrieve specific <a href="https://www.openstreetmap.org/">OpenStreetMap</a> (OSM) data based on custom queries.</p>
+<p>Unlike OSM’s main API, which focuses on editing, Overpass is optimized for data retrieval, handling anything from a few elements to millions in minutes.</p>
+<p>Users can filter data by location, object type, tags, and more. Overpass Ultra, a web-based tool, helps with query creation.</p>
+<p>Refer to the <a href="https://dev.overpass-api.de/overpass-doc/en/">user manual</a> and <a href="https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL">Overpass QL guide</a> for details.</p>
+<p><strong>Resulting map from this tutorial</strong></p>
+<iframe width="100%" height="600" src="https://overpass-ultra.us/#map&amp;m=13.07/39.9596/-75.1743&amp;q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA" title="Map result"></iframe>
+<p><a href="https://overpass-ultra.us/#map&amp;m=13.07/39.9596/-75.1743&amp;q=LQhQBcEtwGwUwFwAIBKcDGAnOBDKB7AOxxiR2xwGclJCkAFAC0hhwBM4YAHZnUDylkhcChZAFkcXJPgBmZGKWxZcokmQrVaScIzhJ00AJ4z5TFu049IfLvi4BXLgHlCACXwA3OJmThMDnCgdo5cACpwALZcrOCISABEAN5J4DgA5pQAdMSRcAC++UjASClpmVnwkJQO2IUJoPailAigSAZwhHG+SADaxQDsAKxZAIwDACyTADRIAMwAnFkLQwAcqwAMSAC6bUgAXvj4kcijc1mrc6DoRP74MC17JeBGXPEAcjiekOl4kEQAYVumHue3adko0H+Yh09mAmB+jHATx0r3iAHE4Pd8Og8HAgV0QTAwTIRNDHu1KUgIVCiM4yUQKVTKZ0cAAjeBuREAQXQ6FqOHQRj8ASCzJ0mEFAGsAKqUHwAGRxfyIIsCKJeb2QbjC4gVBLuxKpTXJrXFSMiMGQAD4SVSADyMUbW+3oTrda3o7CdDS4LR0cysDjcXj2gD0bq6PhdYadtvF6EoLSQ8fFSCdpTtzJpomQskgAA84GwANxZqngezIDZltOU+CycDV2t1pAI9JI5vlpD5UCUF7wM1IVhGHxM9rPNF5lhG7M4WhN7v5xTAG4wfC+bsTgxUMWtkr9AC8h9m-XScHAsyqNWwO1mCS45ClCR2W+KbfSbIAFKMhgtZgATFMswDAAlEgADESDpN6hBvgeSDHqe0EXlecDVLU+jbPeMQ4EYMH4A4hBsC+uytu+mCfl+myzKMABscyzAsozgVBbBPtB2BweRCFIX0KGXsO6E3lh96-JgHCEKR8Eft+oyrKMtF-rRdGsUgbIggA7tx+6yV+GyzAZSAbKBexwAWcTEcmSLgFwLRhmG-ZGPA2T+PODxpFklCMGGXAgpWkRSJQwAwIi4BZAAVpQRCgCAwCgL0bJsvgBYICkSUpYU2xll+eyEJpmC9NemGHo+mBStleUFUVwklbh+EgkRbCVe0+WFcV2CHuJkmVaBZaEeAKHHCWQA">Open the resulting map in a new window</a></p>
+</section>
+<section id="building-an-overpass-query" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="building-an-overpass-query"><span class="header-section-number">3</span> Building an overpass query</h2>
+<p>In this step-by-step tutorial we will learn how to create, style and share a map in Ultra.</p>
+<p>We will be creating an interactive map of all recreation areas in Philadelphia.</p>
+<p><span class="badge rounded-pill bg-primary">01</span> <em>Open a new map in Ultra</em></p>
+<p>Go to <a href="https://overpass-ultra.us/">https://overpass-ultra.us/</a>.</p>
+<p>The first time you open the web you will see a default map like this:</p>
+<p><img src="./images/ultra-screen1.png" class="img-fluid"></p>
+<p><span class="badge rounded-pill bg-primary">02</span> <em>Type your query</em></p>
+<p>A <code>query</code> is a way to filter and retrieve data from OpenStreetMap. It allows you to search for specific types of map features.</p>
+<p>Queries in Ultra follow the strcuture of the <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>.</p>
+<p>If you are not familiar with OpenStreetMap data, see the info window below:</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>How data is organized in OSM?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>All data in OSM is represented by an <strong>element.</strong></p>
+<p>An <strong>element</strong> can be either a <code>node</code> <img src="./images/Osm_element_node.png" style="width:3.0%">, a <code>way</code> <img src="./images/Osm_element_way.png" style="width:3.0%"> or a <code>relation</code> <img src="./images/Osm_element_relation.png" style="width:3.0%">.</p>
+<p>Each element is described using <code>tags</code> which are the combination of a <code>key</code> and a <code>value</code> <img src="./images/Mf_tag.png" style="background-color: white; padding: 0px" width="30" height="30">.</p>
+<p>For example, a coffee shop is represented by an element type <code>node</code> with tags <code>amenity=cafe</code>.</p>
+<p>Learn more about elements and tags <a href="https://wiki.openstreetmap.org/wiki/Elements">here.</a></p>
+</div>
+</div>
+</div>
+<p><strong>The ‘anatomy’ of a query:</strong> <em>Hover over the numbers on the right in the code to reveal what each line on the query does</em></p>
+<p>The following is the default query you see when you open Ultra for the first time:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-1" data-code-copy="false"><pre class="sourceCode numberSource qml code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode qml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1"></a><span class="co">/*</span></span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2"></a><span class="co">This is an example Overpass query.</span></span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3"></a><span class="co">Try it out by pressing the Run button above!</span></span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4"></a><span class="co">*/</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5"></a>[bbox<span class="op">:</span>{{bbox}}]<span class="op">;</span></span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6"></a>(                                               </span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7"></a>way[highway<span class="op">=</span>path]<span class="op">;</span></span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8"></a>way[highway<span class="op">=</span>footway]<span class="op">;</span></span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9"></a>way[highway<span class="op">=</span>cycleway]<span class="op">;</span></span>
+<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10"></a>way[highway<span class="op">=</span>steps]<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-11" class="code-annotation-target"><a href="#annotated-cell-1-11"></a>)<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5">5</button><span id="annotated-cell-1-12" class="code-annotation-target"><a href="#annotated-cell-1-12"></a>out geom<span class="op">;</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1,2,3,4" data-code-annotation="1">This is a comment. Everithing inside <code>/*  */</code> will not be considered in teh query.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="2">This lines defines a <code>bbox</code> which limits the query to what you are viewing on the map.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="7" data-code-annotation="3">This line retrieves an element type <code>way</code> that has the key <code>highway</code> and value <code>path</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="11" data-code-annotation="4">All single queries within the <code>()</code> are grouped together.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="12" data-code-annotation="5">The output format for your query. In this case <code>geom</code> returns the actual shape of the features.</span>
+</dd>
+</dl>
+<p>For this example we will use the following query.</p>
+<p>As there are different types of recreational areas, we will be using a group of three queries with different combinations of value for the key <code>leisure</code>. We will be quering elements tagged: <code>"leisure":"park"</code>, <code>"leisure":"playground"</code> and <code>"leisure":"garden"</code>. There are more tags that can describe this areas. Explore your own case study in <a href="openstreetmap.org">OSM</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Remember</strong> to zoom in to your ineterest area. Keep your query area small to retrieve data faster.</p>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode numberSource qml numberLines code-annotation-code code-with-copy code-annotated"><code class="sourceCode qml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a>[bbox<span class="op">:</span>{{bbox}}]<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="7">7</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2"></a>(</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="8">8</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3"></a>nwr[leisure<span class="op">=</span><span class="st">"park"</span>]<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="9">9</button><span id="annotated-cell-2-4" class="code-annotation-target"><a href="#annotated-cell-2-4"></a>nwr[leisure<span class="op">=</span><span class="st">"playground"</span>]<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="10">10</button><span id="annotated-cell-2-5" class="code-annotation-target"><a href="#annotated-cell-2-5"></a>nwr[leisure<span class="op">=</span><span class="st">"garden"</span>]<span class="op">;</span></span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a>)<span class="op">;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="11">11</button><span id="annotated-cell-2-7" class="code-annotation-target"><a href="#annotated-cell-2-7"></a>out geom<span class="op">;</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="1" data-code-annotation="6">We will keep the <code>[bbox:{{bbox}}];</code> line to filter the query to the map view.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="7">Here we start our grouped query. As there are different types of areas, we will be using three values.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="8">One way to tag recreational areas is <code>leisure:"park"</code>. Note that we use <code>nwr</code> to get any <code>node</code>, <code>way</code> or <code>relation</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="4" data-code-annotation="9">Our second query is <code>leisure:"playground"</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="10">The third type we are quering is <code>leisure:"garden"</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="11">11</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="7" data-code-annotation="11">We close our query retrieving the geomtery of the elements.</span>
+</dd>
+</dl>
+<p><span class="badge rounded-pill bg-primary">03</span> <em>Run your query</em></p>
+<p>Copy and paste this query in Ultra’s query window, and then click ‘Run’ <img src="./images/ultra-run.png" class="img-fluid"></p>
+<p><img src="./images/ultra-screen2.png" class="img-fluid"></p>
+<p>After some seconds you will see the results display on the map. All results are shown in yellow. In the next steps we will learn how to style the results.</p>
+<p>Learn more on how to build a query <a href="">here</a></p>
+</section>
+<section id="styling-in-ultra" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="styling-in-ultra"><span class="header-section-number">4</span> Styling in Ultra</h2>
+<p>In Ultra, you can style the map elements by adding a <code>style:</code> key on a YAML front-matter. This YAML front-matter is a way to add metadata to the query file. All these will be read by Maplibre and Ultra when rendering your resulting map.</p>
+<p><span class="badge rounded-pill bg-primary">01</span> <em>Add a title and description</em></p>
+<p>The YAML front-matter has to be framed inside <code>---</code>, just like in the example below.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode numberSource xml numberLines code-annotation-code code-with-copy code-annotated"><code class="sourceCode xml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-1" class="code-annotation-target"><a href="#annotated-cell-3-1"></a>---</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2"></a>title: Recreational areas in Philadelphia</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-3" class="code-annotation-target"><a href="#annotated-cell-3-3"></a>description: Map of all recreational areas in the city of Philadelphia</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-4" class="code-annotation-target"><a href="#annotated-cell-3-4"></a>---</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="1" data-code-annotation="1">Opening the YAML front-matter text.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="2" data-code-annotation="2">Title property to be incldued.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="3" data-code-annotation="3">Description text to be included.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="4" data-code-annotation="4">Closing line of the YAML front-matter.</span>
+</dd>
+</dl>
+<p>Copy and paste (or type) the YAML front-matter with the title and description properties into the Ultra query we created in the previous section.</p>
+<p>Paste the YAML front-matter <strong>before</strong> the query text.</p>
+<p><img src="./images/ultra-yaml.png" class="img-fluid" width="420"></p>
+<p><span class="badge rounded-pill bg-primary">02</span> <em>Add a custom style</em></p>
+<p>Styling is possible in Ultra within the YAML front-matter. A <code>style</code> is a series of rules on how to visually render a map, what elements are drawn and which colors, icons, sizes, and more to use.</p>
+<p>Ultra uses the <a href="https://maplibre.org/maplibre-style-spec/">Maplibre Style Spec</a>. This style is specified by <code>properties</code>.</p>
+<p>In this section we describe some of the basic <code>properties</code> needed to create a custom style.</p>
+<p>The first step is to add <code>style:</code> to the YAML front-matter. You can tyoe it right after the <code>description:</code> property.</p>
+<p>We will assign colors to the polygons we obtained from the query. For that we will add a layer of type fill (polygon) with <code>- type: fill</code>. There are other types of layers you can add: ‘background’, ‘circle’, ‘heatmap’, ‘fill-extrusion’, ‘line’, ‘symbol’. Each serves different purposes and works for specific elements, if it is a point, for example, you might use type:symbol.</p>
+<p>Then we specify the property of our layer of type ‘fill’ we want to modify.</p>
+<p>We add <code>fill-color:</code> to change the color of our polygons. Each layer type has its own properties that can be modified. See <a href="https://maplibre.org/maplibre-style-spec/layers/#fill">Layes</a> on the Maplibre Style Spec documentation.</p>
+<p><span class="badge rounded-pill bg-primary">03</span> <em>Add conditionals to assign colors based on the feature properties</em></p>
+<p>Since we want to color each type of recreational area with a different color, we are using <code>- case</code> (line 9) to introduce conditions. We type a conditional statement followed by a specific color for each type of recreational area.</p>
+<p>On line 10 of the example code we add <code>[get, leisure]</code> to select the tag <code>leisure</code> from the proeprties. Then we ask for those elements that have <code>"park"</code> as the value for that tag. The <code>==</code> symbol states this.</p>
+<p>On line 11, we specify the color we want to assign to the polygons with tag <code>leisure=park</code>. The colors can be specified using the ‘rgb’ (red, green, blue) format. You can use tools like <a href="https://www.google.com/search?q=google+color+picker&amp;oq=google+color&amp;gs_lcrp=EgZjaHJvbWUqDQgFEAAYgwEYsQMYgAQyEAgAEAAYkQIYsQMYgAQYigUyBggBEEUYOTINCAIQABiRAhiABBiKBTINCAMQABiRAhiABBiKBTINCAQQABiRAhiABBiKBTINCAUQABiDARixAxiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABNIBCDYyODBqMGo5qAIAsAIB&amp;sourceid=chrome&amp;ie=UTF-8">Google Color Picker</a> to know the ‘rgb’ code of a color.</p>
+<p>Lines 12 to 15 on the sample code contain the same conditional + color for the other two types of recreational areas: playground and garden.</p>
+<p>On line 16 we introduce a fallback color. This color will be assigned to polygons that do not satisfy the conditions in our <code>case</code>. You always need to assign a fallback color in Maplibre Style Spec.</p>
+<p><span class="badge rounded-pill bg-primary">04</span> <em>Run the query again</em></p>
+<p>Copy and paste the sample code below on your Ultra map and run the query again.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-4"><pre class="sourceCode numberSource qml numberLines code-annotation-code code-with-copy code-annotated"><code class="sourceCode qml"><span id="annotated-cell-4-1"><a href="#annotated-cell-4-1"></a><span class="op">---</span></span>
+<span id="annotated-cell-4-2"><a href="#annotated-cell-4-2"></a>title<span class="op">:</span> Recreational areas <span class="kw">in</span> Philadelphia</span>
+<span id="annotated-cell-4-3"><a href="#annotated-cell-4-3"></a>description<span class="op">:</span> Map <span class="kw">of</span> all recreational areas <span class="kw">in</span> the city <span class="kw">of</span> Philadelphia</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="1">1</button><span id="annotated-cell-4-4" class="code-annotation-target"><a href="#annotated-cell-4-4"></a>style<span class="op">:</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="2">2</button><span id="annotated-cell-4-5" class="code-annotation-target"><a href="#annotated-cell-4-5"></a>  layers<span class="op">:</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="3">3</button><span id="annotated-cell-4-6" class="code-annotation-target"><a href="#annotated-cell-4-6"></a>    <span class="op">-</span> type<span class="op">:</span> fill</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="4">4</button><span id="annotated-cell-4-7" class="code-annotation-target"><a href="#annotated-cell-4-7"></a>      paint<span class="op">:</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="5">5</button><span id="annotated-cell-4-8" class="code-annotation-target"><a href="#annotated-cell-4-8"></a>        fill<span class="op">-</span>color<span class="op">:</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="6">6</button><span id="annotated-cell-4-9" class="code-annotation-target"><a href="#annotated-cell-4-9"></a>          <span class="op">-</span> <span class="cf">case</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="7">7</button><span id="annotated-cell-4-10" class="code-annotation-target"><a href="#annotated-cell-4-10"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"park"</span> ]</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="8">8</button><span id="annotated-cell-4-11" class="code-annotation-target"><a href="#annotated-cell-4-11"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">159</span><span class="op">,</span> <span class="dv">247</span><span class="op">,</span> <span class="dv">7</span>) # green</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="9">9</button><span id="annotated-cell-4-12" class="code-annotation-target"><a href="#annotated-cell-4-12"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"playground"</span> ]</span>
+<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">80</span><span class="op">,</span> <span class="dv">163</span><span class="op">,</span> <span class="dv">91</span>) # dark gren</span>
+<span id="annotated-cell-4-14"><a href="#annotated-cell-4-14"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"garden"</span> ]</span>
+<span id="annotated-cell-4-15"><a href="#annotated-cell-4-15"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">181</span><span class="op">,</span> <span class="dv">159</span><span class="op">,</span> <span class="dv">16</span>) # brown</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="10">10</button><span id="annotated-cell-4-16" class="code-annotation-target"><a href="#annotated-cell-4-16"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)</span>
+<span id="annotated-cell-4-17"><a href="#annotated-cell-4-17"></a><span class="op">---</span></span>
+<span id="annotated-cell-4-18"><a href="#annotated-cell-4-18"></a>[bbox<span class="op">:</span>{{bbox}}]<span class="op">;</span></span>
+<span id="annotated-cell-4-19"><a href="#annotated-cell-4-19"></a>(</span>
+<span id="annotated-cell-4-20"><a href="#annotated-cell-4-20"></a>  nwr[leisure<span class="op">=</span>park]<span class="op">;</span></span>
+<span id="annotated-cell-4-21"><a href="#annotated-cell-4-21"></a>  nwr[leisure<span class="op">=</span>playground]<span class="op">;</span></span>
+<span id="annotated-cell-4-22"><a href="#annotated-cell-4-22"></a>  nwr[leisure<span class="op">=</span>garden]<span class="op">;</span></span>
+<span id="annotated-cell-4-23"><a href="#annotated-cell-4-23"></a>)<span class="op">;</span></span>
+<span id="annotated-cell-4-24"><a href="#annotated-cell-4-24"></a>out geom<span class="op">;</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-4" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="4" data-code-annotation="1">We start the style section with this line.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="5" data-code-annotation="2">The most important property is <code>layers</code> which adds something to the map.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="6" data-code-annotation="3">We define our layer type as <code>fill</code> as we want the polygons to be painted in the map.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="7" data-code-annotation="4">There are two main types of properties <code>paint:</code> and <code>layout</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="8" data-code-annotation="5">We define the <code>fill-color</code> to be the property we want to modify.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="9" data-code-annotation="6">The <code>case</code> expression will assign a value to an output of a condition (lines 10 to 15).</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="10" data-code-annotation="7">We search for features that have <code>park</code> as the value of <code>leisure</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="11" data-code-annotation="8">This color is assigned to those features that satisfy the condition established in the previous line.</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="12,13,14,15" data-code-annotation="9">We do the same evaluation and assignment for thos features with <code>playground</code> (line 13) and <code>garden</code> (line 15).</span>
+</dd>
+<dt data-target-cell="annotated-cell-4" data-target-annotation="10">10</dt>
+<dd>
+<span data-code-cell="annotated-cell-4" data-code-lines="16" data-code-annotation="10">This is the fallback color. This will be assigned if there are features that do not satisfy any of the previous conditions.</span>
+</dd>
+</dl>
+<p><img src="./images/ultra-screen3.png" class="img-fluid"></p>
+<p><span class="badge rounded-pill bg-primary">05</span> <em>Change the background style</em></p>
+<p>Ultra comes with a variety of background styles you can choose. To change the style click on the <a href="./images/ultra-pick.png">Pick Style</a> button on the top menu bar and select any style from the list.</p>
+<p>In this example we chose ‘Protomaps Light’ because it uses shadows of grey for most of the elements, highlighting the vibrant greens we chose for the parks.</p>
+<p><img src="./images/ultra-screen4.png" class="img-fluid"></p>
+<p>Notice that an extra line is added to the YAML front-matter with the URL of the background style used. You can chose from anny of the styles in Ultra or use your own from a URL pointing to a JSON file.</p>
+<!--```{=html}
+<iframe width="780" height="500" src="https://overpass-ultra.us/#map&m=11.73/39.9686/-75.1661&q=NoIxHsA8C4G9bFAvkgugbgFAApMDsB3AJ2ACIAbAUwEsBnAVyMtIF5SAHAQyIGtSN8xYFTqNKbduU4BPAOZFw9PABN+WQiREMmbWd2WU8azAEosigC4ACWZXABbdEA" title="Quarto Documentation"></iframe>
+```
+-->
+</section>
+<section id="adding-interactivity-to-the-map" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="adding-interactivity-to-the-map"><span class="header-section-number">5</span> Adding interactivity to the map</h2>
+<p>In this section we explore some additional options to customize your resulting map. From an initial center point and zoom, to adding navigation controls and popup windows.</p>
+<section id="adding-an-initial-center-point-and-zoom-level" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="adding-an-initial-center-point-and-zoom-level"><span class="header-section-number">5.1</span> Adding an initial center point and zoom level</h3>
+<p>Ultra allows adding some additional options for your map, equivalent to Maplibre Style Spec <a href="https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/MapOptions/">MapOptions</a>.</p>
+<p>Adding an inital center point and zoom is helpful to ensure the map starts in the desired location for the viewer.</p>
+<p>To add a center point, simply add the following to your query window, after the <code>description:</code> property and before the <code>style:</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode qml code-with-copy"><code class="sourceCode qml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>options<span class="op">:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  center<span class="op">:</span> [<span class="op">-</span><span class="fl">75.16342</span><span class="op">,</span> <span class="fl">39.95500</span>]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  zoom<span class="op">:</span> <span class="dv">13</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The values in this example are centered in the city of Philadelphia, PA.</p>
+<p>To know the coordinates and zoom level for a different area you can use the <a href="https://labs.mapbox.com/location-helper/">Mapbox Location Helper</a>. Zoom to the area you want and copy/paste the values on <code>center(array)</code> and <code>zoom</code>.</p>
+<p><img src="./images/loc-helper.png" class="img-fluid"></p>
+</section>
+<section id="adding-navigation-controls-to-the-map" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="adding-navigation-controls-to-the-map"><span class="header-section-number">5.2</span> Adding navigation controls to the map</h3>
+<p>Similar as the MapOptions, Ultra allows adding controls to the resulting map.</p>
+<p>In this example we are adding a <code>NavigationControl</code> <img src="./images/ultra-nav.png" class="img-fluid" width="30">,</p>
+<p>a <code>GeolocateControl</code> <img src="./images/ultra-loc.png" class="img-fluid" width="30"> and an <code>HTMLControl</code>.</p>
+<p>To add these three controls, just copy and paste the following code lines after the <code>options:</code> property and before the <code>style:</code> in your query.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-6"><pre class="sourceCode qml code-annotation-code code-with-copy code-annotated"><code class="sourceCode qml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-1" class="code-annotation-target"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a>controls<span class="op">:</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="2">2</button><span id="annotated-cell-6-2" class="code-annotation-target"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> type<span class="op">:</span> NavigationControl</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="3">3</button><span id="annotated-cell-6-3" class="code-annotation-target"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>    position<span class="op">:</span> top<span class="op">-</span>right</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="4">4</button><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> type<span class="op">:</span> GeolocateControl</span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>    options<span class="op">:</span></span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>      positionOptions<span class="op">:</span></span>
+<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a>        enableHighAccuracy<span class="op">:</span> <span class="kw">true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="5">5</button><span id="annotated-cell-6-8" class="code-annotation-target"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a>      trackUserLocation<span class="op">:</span> <span class="kw">true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="6">6</button><span id="annotated-cell-6-9" class="code-annotation-target"><a href="#annotated-cell-6-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">-</span> type<span class="op">:</span> HTMLControl</span>
+<span id="annotated-cell-6-10"><a href="#annotated-cell-6-10" aria-hidden="true" tabindex="-1"></a>    options<span class="op">:</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="7">7</button><span id="annotated-cell-6-11" class="code-annotation-target"><a href="#annotated-cell-6-11" aria-hidden="true" tabindex="-1"></a>      html<span class="op">:</span> <span class="op">&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="8">8</button><span id="annotated-cell-6-12" class="code-annotation-target"><a href="#annotated-cell-6-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">&lt;</span>h1<span class="op">&gt;&lt;</span>center<span class="op">&gt;</span>Green areas <span class="kw">in</span> Philadelphia<span class="op">&lt;/</span>center<span class="op">&gt;&lt;/</span>h1<span class="op">&gt;</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="9">9</button><span id="annotated-cell-6-13" class="code-annotation-target"><a href="#annotated-cell-6-13" aria-hidden="true" tabindex="-1"></a>      css<span class="op">:</span> <span class="op">&gt;</span></span>
+<span id="annotated-cell-6-14"><a href="#annotated-cell-6-14" aria-hidden="true" tabindex="-1"></a>        h1 {</span>
+<span id="annotated-cell-6-15"><a href="#annotated-cell-6-15" aria-hidden="true" tabindex="-1"></a>          <span class="dt">position</span><span class="op">:</span> fixed<span class="op">;</span></span>
+<span id="annotated-cell-6-16"><a href="#annotated-cell-6-16" aria-hidden="true" tabindex="-1"></a>          <span class="dt">top</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="annotated-cell-6-17"><a href="#annotated-cell-6-17" aria-hidden="true" tabindex="-1"></a>          <span class="dt">left</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="annotated-cell-6-18"><a href="#annotated-cell-6-18" aria-hidden="true" tabindex="-1"></a>          <span class="dt">right</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="annotated-cell-6-19"><a href="#annotated-cell-6-19" aria-hidden="true" tabindex="-1"></a>        }</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="1" data-code-annotation="1">Adding the <code>controls:</code> property.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="2" data-code-annotation="2">Fist we add a type <code>NavigationControl</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="3" data-code-annotation="3">Set the position of the control in the map window.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="4,5,6,7" data-code-annotation="4">Second we add a <code>GeolocateControl</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="8" data-code-annotation="5">We enable the option to track the user location.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="9,10" data-code-annotation="6">Third we add the <code>HTMLControl</code> to include a title for the map.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="7">7</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="11" data-code-annotation="7">Open an html section.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="8">8</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="12" data-code-annotation="8">Include the text for the title betwen the <code>&lt;center&gt; &lt;/center&gt;</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-6" data-target-annotation="9">9</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="13,14,15,16,17,18,19" data-code-annotation="9">Style the title using css.</span>
+</dd>
+</dl>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These options will be visible only when you share the qyery as an interactive map. See section 6 of this tutorial.</p>
+</div>
+</div>
+</section>
+<section id="customizing-the-popup-window" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="customizing-the-popup-window"><span class="header-section-number">5.3</span> Customizing the popup window</h3>
+<p>Finally, another useful option to add is a customized popup window. This window will appear when the viewer clicks or hover the mouse over one of the elements from the query.</p>
+<p>Here we add a customized popup window that shows the name and leisure type and will appear when one hovers over the polygon.</p>
+<p>Paste the code below under the <code>description:</code> property on your query.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-7"><pre class="sourceCode qml code-annotation-code code-with-copy code-annotated"><code class="sourceCode qml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="1">1</button><span id="annotated-cell-7-1" class="code-annotation-target"><a href="#annotated-cell-7-1" aria-hidden="true" tabindex="-1"></a>popupOnHover<span class="op">:</span> <span class="kw">true</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-7" data-target-annotation="2">2</button><span id="annotated-cell-7-2" class="code-annotation-target"><a href="#annotated-cell-7-2" aria-hidden="true" tabindex="-1"></a>popupTemplate<span class="op">:</span> <span class="st">"{{tags.name}} - {{tags.leisure}}"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="1">This activates the popup on hover. The defualt is when click.</span>
+</dd>
+<dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-7" data-code-lines="2" data-code-annotation="2">We only add the feature <code>name</code> and <code>leisure</code> type to the popup.</span>
+</dd>
+</dl>
+</section>
+</section>
+<section id="complete-query-for-an-interactive-map" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="complete-query-for-an-interactive-map"><span class="header-section-number">6</span> Complete query for an interactive map</h2>
+<p>You can copy and paste the code below on your query window. Remember to zoom in to Philadelphia to have the correct bbox for the map configured here. If you are working on a different area of interest, zoom in to that area and change the <code>center:</code> and <code>zoom:</code> properties on the YAML front-matter before running the query.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource qml numberLines code-with-copy"><code class="sourceCode qml"><span id="cb2-1"><a href="#cb2-1"></a><span class="op">---</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>title<span class="op">:</span> Recreational areas <span class="kw">in</span> Philadelphia</span>
+<span id="cb2-3"><a href="#cb2-3"></a>description<span class="op">:</span> Map <span class="kw">of</span> all recreational areas <span class="kw">in</span> the city <span class="kw">of</span> Philadelphia</span>
+<span id="cb2-4"><a href="#cb2-4"></a>popupOnHover<span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>popupTemplate<span class="op">:</span> <span class="st">"{{tags.name}} - {{tags.leisure}}"</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>options<span class="op">:</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>  center<span class="op">:</span> [<span class="op">-</span><span class="fl">75.17474</span><span class="op">,</span> <span class="fl">39.95880</span>]</span>
+<span id="cb2-8"><a href="#cb2-8"></a>  zoom<span class="op">:</span> <span class="fl">13.83</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>controls<span class="op">:</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>  <span class="op">-</span> type<span class="op">:</span> NavigationControl</span>
+<span id="cb2-11"><a href="#cb2-11"></a>    position<span class="op">:</span> top<span class="op">-</span>right</span>
+<span id="cb2-12"><a href="#cb2-12"></a>  <span class="op">-</span> type<span class="op">:</span> GeolocateControl</span>
+<span id="cb2-13"><a href="#cb2-13"></a>    options<span class="op">:</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>      positionOptions<span class="op">:</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>        enableHighAccuracy<span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>      trackUserLocation<span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a>  <span class="op">-</span> type<span class="op">:</span> HTMLControl</span>
+<span id="cb2-18"><a href="#cb2-18"></a>    options<span class="op">:</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>      html<span class="op">:</span> <span class="op">&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a>        <span class="op">&lt;</span>h1<span class="op">&gt;&lt;</span>center<span class="op">&gt;</span>Green areas <span class="kw">in</span> Philadelphia<span class="op">&lt;/</span>center<span class="op">&gt;&lt;/</span>h1<span class="op">&gt;</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a>      css<span class="op">:</span> <span class="op">&gt;</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a>        h1 {</span>
+<span id="cb2-23"><a href="#cb2-23"></a>          <span class="dt">position</span><span class="op">:</span> fixed<span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a>          <span class="dt">top</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a>          <span class="dt">left</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a>          <span class="dt">right</span><span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a>        }</span>
+<span id="cb2-28"><a href="#cb2-28"></a>style<span class="op">:</span></span>
+<span id="cb2-29"><a href="#cb2-29"></a>  layers<span class="op">:</span>                                          </span>
+<span id="cb2-30"><a href="#cb2-30"></a>    <span class="op">-</span> type<span class="op">:</span> fill                                                  </span>
+<span id="cb2-31"><a href="#cb2-31"></a>      paint<span class="op">:</span>                                          </span>
+<span id="cb2-32"><a href="#cb2-32"></a>        fill<span class="op">-</span>color<span class="op">:</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a>          <span class="op">-</span> <span class="cf">case</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"park"</span> ]</span>
+<span id="cb2-35"><a href="#cb2-35"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">159</span><span class="op">,</span> <span class="dv">247</span><span class="op">,</span> <span class="dv">7</span>) # green</span>
+<span id="cb2-36"><a href="#cb2-36"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"playground"</span> ]</span>
+<span id="cb2-37"><a href="#cb2-37"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">80</span><span class="op">,</span> <span class="dv">163</span><span class="op">,</span> <span class="dv">91</span>) # dark gren</span>
+<span id="cb2-38"><a href="#cb2-38"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"garden"</span> ]</span>
+<span id="cb2-39"><a href="#cb2-39"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">181</span><span class="op">,</span> <span class="dv">159</span><span class="op">,</span> <span class="dv">16</span>) # brown</span>
+<span id="cb2-40"><a href="#cb2-40"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)</span>
+<span id="cb2-41"><a href="#cb2-41"></a>  <span class="kw">extends</span><span class="op">:</span> https<span class="op">:</span><span class="co">//styles.trailsta.sh/protomaps-light.json</span></span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="op">---</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a>[bbox<span class="op">:</span>{{bbox}}]<span class="op">;</span></span>
+<span id="cb2-44"><a href="#cb2-44"></a>(</span>
+<span id="cb2-45"><a href="#cb2-45"></a>  nwr[leisure<span class="op">=</span>park]<span class="op">;</span></span>
+<span id="cb2-46"><a href="#cb2-46"></a>  nwr[leisure<span class="op">=</span>playground]<span class="op">;</span></span>
+<span id="cb2-47"><a href="#cb2-47"></a>  nwr[leisure<span class="op">=</span>garden]<span class="op">;</span></span>
+<span id="cb2-48"><a href="#cb2-48"></a>)<span class="op">;</span></span>
+<span id="cb2-49"><a href="#cb2-49"></a>out geom<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/ultra-result1.png" class="img-fluid figure-img"></p>
+<figcaption>Resulting Query Map</figcaption>
+</figure>
+</div>
+</section>
+<section id="sharing-you-ultra-map" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sharing-you-ultra-map"><span class="header-section-number">7</span> Sharing you Ultra map</h2>
+<p>The last step is to share your resulting map.</p>
+<p>There are mutliple ways you can share it online, as a query or an interactive map.</p>
+<p><span class="badge rounded-pill bg-primary">01</span> <em>Click on Share</em></p>
+<p>Click on the Share <img src="./images/ultra-share.png" height="30"></p>
+<p><span class="badge rounded-pill bg-primary">02</span> <em>Select how you want to share</em></p>
+<p>In the new window, select how you want to share the map.</p>
+<p><img src="./images/ultra-share2.png" class="img-fluid" width="300"></p>
+<ol type="1">
+<li>If you select to share as query, the link will open the map and query with all actions.</li>
+</ol>
+<p><img src="./images/ultra-result1.png" class="img-fluid"></p>
+<ol start="2" type="1">
+<li>If you select to share as an interactive map, the link will open a mapview only, without the query window on the side.</li>
+</ol>
+<p><img src="./images/ultra-result2.png" class="img-fluid"></p>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="attribution" class="level2 appendix unnumbered"><h2 class="anchored quarto-appendix-heading">Attribution</h2><div class="quarto-appendix-contents">
+
+<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+<a property="dct:title" rel="cc:attributionURL" href="https://felipevaldez.com/ultra_tutorial/ultra_tutorial.html">Open Geospatial Data</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://felipevaldez.com/">Felipe Valdez</a> is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a>
+</p>
+
+
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
