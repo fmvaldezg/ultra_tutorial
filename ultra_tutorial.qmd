@@ -9,15 +9,23 @@ toc-depth: 3
 number-sections: true
 code-annotations: hover
 format: 
-  html: default
-  pdf: default
-##format-links: 
-    ##format: pdf
-    ##text: PDF
-    ##icon: file-pdf
+  html:
+    default-image-extension: svg
+  pdf:
+    default-image-extension: tex
+format-links: 
+    format: pdf
+    text: PDF
+    icon: file-pdf
 ---
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17343164.svg)](https://doi.org/10.5281/zenodo.17343164)
+```{=html}
+<a href="https://doi.org/10.5281/zenodo.17343164"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.17343164.svg" alt="DOI"></a>
+```
+
+```{=latex}
+\href{https://doi.org/10.5281/zenodo.17343164}{\includegraphics[height=8mm]{images/zenodo.17343164.pdf}}
+```
 
 Cite this tutorial:
 Valdez, Felipe. (2025, March 7). Ultra (overpass ultra) Tutorial v1.0. Zenodo. https://doi.org/10.5281/zenodo.17343164
