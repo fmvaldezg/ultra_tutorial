@@ -13,10 +13,10 @@ format:
     default-image-extension: svg
   pdf:
     default-image-extension: tex
-format-links: 
-    format: pdf
-    text: PDF
-    icon: file-pdf
+##format-links: 
+    ##format: pdf
+    ##text: PDF
+    ##icon: file-pdf
 ---
 
 ```{=html}
@@ -24,7 +24,7 @@ format-links:
 ```
 
 ```{=latex}
-\href{https://doi.org/10.5281/zenodo.17343164}{\includegraphics[height=8mm]{images/zenodo.17343164.pdf}}
+\href{https://doi.org/10.5281/zenodo.17343164}{\includegraphics[height=6mm]{images/zenodo.17343164.pdf}}
 ```
 
 Cite this tutorial:
