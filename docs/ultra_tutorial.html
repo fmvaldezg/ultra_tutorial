@@ -200,7 +200,7 @@ gtag('config', 'G-RC52W8J799', { 'anonymize_ip': true});
 <p><img src="./images/ultra-screen1.png" class="img-fluid"></p>
 <p><span class="badge rounded-pill bg-primary">02</span> <em>Type your query</em></p>
 <p>A <code>query</code> is a way to filter and retrieve data from OpenStreetMap. It allows you to search for specific types of map features.</p>
-<p>Queries in Ultra follow the strcuture of the <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>.</p>
+<p>Queries in Ultra follow the structure of the <a href="https://wiki.openstreetmap.org/wiki/Overpass_API">Overpass API</a>.</p>
 <p>If you are not familiar with OpenStreetMap data, see the info window below:</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -259,7 +259,7 @@ gtag('config', 'G-RC52W8J799', { 'anonymize_ip': true});
 </dd>
 </dl>
 <p>For this example we will use the following query.</p>
-<p>As there are different types of recreational areas, we will be using a group of three queries with different combinations of value for the key <code>leisure</code>. We will be quering elements tagged: <code>"leisure":"park"</code>, <code>"leisure":"playground"</code> and <code>"leisure":"garden"</code>. There are more tags that can describe this areas. Explore your own case study in <a href="openstreetmap.org">OSM</a>.</p>
+<p>As there are different types of recreational areas, we will be using a group of three queries with different combinations of value for the key <code>leisure</code>. We will be querying elements tagged: <code>"leisure":"park"</code>, <code>"leisure":"playground"</code> and <code>"leisure":"garden"</code>. There are more tags that can describe this areas. Explore your own case study in <a href="openstreetmap.org">OSM</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -270,7 +270,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Remember</strong> to zoom in to your ineterest area. Keep your query area small to retrieve data faster.</p>
+<p><strong>Remember</strong> to zoom in to your interest area. Keep your query area small to retrieve data faster.</p>
 </div>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode numberSource qml numberLines code-annotation-code code-with-copy code-annotated"><code class="sourceCode qml"><button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-1" class="code-annotation-target"><a href="#annotated-cell-2-1"></a>[bbox<span class="op">:</span>{{bbox}}]<span class="op">;</span></span>
@@ -299,11 +299,11 @@ Note
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="10">10</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="10">The third type we are quering is <code>leisure:"garden"</code>.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="5" data-code-annotation="10">The third type we are querying is <code>leisure:"garden"</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="11">11</dt>
 <dd>
-<span data-code-cell="annotated-cell-2" data-code-lines="7" data-code-annotation="11">We close our query retrieving the geomtery of the elements.</span>
+<span data-code-cell="annotated-cell-2" data-code-lines="7" data-code-annotation="11">We close our query retrieving the geometry of the elements.</span>
 </dd>
 </dl>
 <p><span class="badge rounded-pill bg-primary">03</span> <em>Run your query</em></p>
@@ -346,13 +346,13 @@ Note
 <p>Styling is possible in Ultra within the YAML front-matter. A <code>style</code> is a series of rules on how to visually render a map, what elements are drawn and which colors, icons, sizes, and more to use.</p>
 <p>Ultra uses the <a href="https://maplibre.org/maplibre-style-spec/">Maplibre Style Spec</a>. This style is specified by <code>properties</code>.</p>
 <p>In this section we describe some of the basic <code>properties</code> needed to create a custom style.</p>
-<p>The first step is to add <code>style:</code> to the YAML front-matter. You can tyoe it right after the <code>description:</code> property.</p>
+<p>The first step is to add <code>style:</code> to the YAML front-matter. You can type it right after the <code>description:</code> property.</p>
 <p>We will assign colors to the polygons we obtained from the query. For that we will add a layer of type fill (polygon) with <code>- type: fill</code>. There are other types of layers you can add: ‘background’, ‘circle’, ‘heatmap’, ‘fill-extrusion’, ‘line’, ‘symbol’. Each serves different purposes and works for specific elements, if it is a point, for example, you might use type:symbol.</p>
 <p>Then we specify the property of our layer of type ‘fill’ we want to modify.</p>
 <p>We add <code>fill-color:</code> to change the color of our polygons. Each layer type has its own properties that can be modified. See <a href="https://maplibre.org/maplibre-style-spec/layers/#fill">Layes</a> on the Maplibre Style Spec documentation.</p>
 <p><span class="badge rounded-pill bg-primary">03</span> <em>Add conditionals to assign colors based on the feature properties</em></p>
 <p>Since we want to color each type of recreational area with a different color, we are using <code>- case</code> (line 9) to introduce conditions. We type a conditional statement followed by a specific color for each type of recreational area.</p>
-<p>On line 10 of the example code we add <code>[get, leisure]</code> to select the tag <code>leisure</code> from the proeprties. Then we ask for those elements that have <code>"park"</code> as the value for that tag. The <code>==</code> symbol states this.</p>
+<p>On line 10 of the example code we add <code>[get, leisure]</code> to select the tag <code>leisure</code> from the properties. Then we ask for those elements that have <code>"park"</code> as the value for that tag. The <code>==</code> symbol states this.</p>
 <p>On line 11, we specify the color we want to assign to the polygons with tag <code>leisure=park</code>. The colors can be specified using the ‘rgb’ (red, green, blue) format. You can use tools like <a href="https://www.google.com/search?q=google+color+picker&amp;oq=google+color&amp;gs_lcrp=EgZjaHJvbWUqDQgFEAAYgwEYsQMYgAQyEAgAEAAYkQIYsQMYgAQYigUyBggBEEUYOTINCAIQABiRAhiABBiKBTINCAMQABiRAhiABBiKBTINCAQQABiRAhiABBiKBTINCAUQABiDARixAxiABDIHCAYQABiABDIHCAcQABiABDIHCAgQABiABDIHCAkQABiABNIBCDYyODBqMGo5qAIAsAIB&amp;sourceid=chrome&amp;ie=UTF-8">Google Color Picker</a> to know the ‘rgb’ code of a color.</p>
 <p>Lines 12 to 15 on the sample code contain the same conditional + color for the other two types of recreational areas: playground and garden.</p>
 <p>On line 16 we introduce a fallback color. This color will be assigned to polygons that do not satisfy the conditions in our <code>case</code>. You always need to assign a fallback color in Maplibre Style Spec.</p>
@@ -370,7 +370,7 @@ Note
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="7">7</button><span id="annotated-cell-4-10" class="code-annotation-target"><a href="#annotated-cell-4-10"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"park"</span> ]</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="8">8</button><span id="annotated-cell-4-11" class="code-annotation-target"><a href="#annotated-cell-4-11"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">159</span><span class="op">,</span> <span class="dv">247</span><span class="op">,</span> <span class="dv">7</span>) # green</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="9">9</button><span id="annotated-cell-4-12" class="code-annotation-target"><a href="#annotated-cell-4-12"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"playground"</span> ]</span>
-<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">80</span><span class="op">,</span> <span class="dv">163</span><span class="op">,</span> <span class="dv">91</span>) # dark gren</span>
+<span id="annotated-cell-4-13"><a href="#annotated-cell-4-13"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">80</span><span class="op">,</span> <span class="dv">163</span><span class="op">,</span> <span class="dv">91</span>) # dark green</span>
 <span id="annotated-cell-4-14"><a href="#annotated-cell-4-14"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"garden"</span> ]</span>
 <span id="annotated-cell-4-15"><a href="#annotated-cell-4-15"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">181</span><span class="op">,</span> <span class="dv">159</span><span class="op">,</span> <span class="dv">16</span>) # brown</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-4" data-target-annotation="10">10</button><span id="annotated-cell-4-16" class="code-annotation-target"><a href="#annotated-cell-4-16"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)</span>
@@ -429,7 +429,7 @@ Note
 <p>Ultra comes with a variety of background styles you can choose. To change the style click on the <a href="./images/ultra-pick.png">Pick Style</a> button on the top menu bar and select any style from the list.</p>
 <p>In this example we chose ‘Protomaps Light’ because it uses shadows of grey for most of the elements, highlighting the vibrant greens we chose for the parks.</p>
 <p><img src="./images/ultra-screen4.png" class="img-fluid"></p>
-<p>Notice that an extra line is added to the YAML front-matter with the URL of the background style used. You can chose from anny of the styles in Ultra or use your own from a URL pointing to a JSON file.</p>
+<p>Notice that an extra line is added to the YAML front-matter with the URL of the background style used. You can chose from any of the styles in Ultra or use your own from a URL pointing to a JSON file.</p>
 <!--```{=html}
 <iframe width="780" height="500" src="https://overpass-ultra.us/#map&m=11.73/39.9686/-75.1661&q=NoIxHsA8C4G9bFAvkgugbgFAApMDsB3AJ2ACIAbAUwEsBnAVyMtIF5SAHAQyIGtSN8xYFTqNKbduU4BPAOZFw9PABN+WQiREMmbWd2WU8azAEosigC4ACWZXABbdEA" title="Quarto Documentation"></iframe>
 ```
@@ -441,7 +441,7 @@ Note
 <section id="adding-an-initial-center-point-and-zoom-level" class="level3" data-number="5.1">
 <h3 data-number="5.1" class="anchored" data-anchor-id="adding-an-initial-center-point-and-zoom-level"><span class="header-section-number">5.1</span> Adding an initial center point and zoom level</h3>
 <p>Ultra allows adding some additional options for your map, equivalent to Maplibre Style Spec <a href="https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/MapOptions/">MapOptions</a>.</p>
-<p>Adding an inital center point and zoom is helpful to ensure the map starts in the desired location for the viewer.</p>
+<p>Adding an initial center point and zoom is helpful to ensure the map starts in the desired location for the viewer.</p>
 <p>To add a center point, simply add the following to your query window, after the <code>description:</code> property and before the <code>style:</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode qml code-with-copy"><code class="sourceCode qml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>options<span class="op">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  center<span class="op">:</span> [<span class="op">-</span><span class="fl">75.16342</span><span class="op">,</span> <span class="fl">39.95500</span>]</span>
@@ -506,7 +506,7 @@ Note
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="8">8</dt>
 <dd>
-<span data-code-cell="annotated-cell-6" data-code-lines="12" data-code-annotation="8">Include the text for the title betwen the <code>&lt;center&gt; &lt;/center&gt;</code>.</span>
+<span data-code-cell="annotated-cell-6" data-code-lines="12" data-code-annotation="8">Include the text for the title between the <code>&lt;center&gt; &lt;/center&gt;</code>.</span>
 </dd>
 <dt data-target-cell="annotated-cell-6" data-target-annotation="9">9</dt>
 <dd>
@@ -523,7 +523,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>These options will be visible only when you share the qyery as an interactive map. See section 6 of this tutorial.</p>
+<p>These options will be visible only when you share the query as an interactive map. See section 6 of this tutorial.</p>
 </div>
 </div>
 </section>
@@ -537,7 +537,7 @@ Note
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-7" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="1">This activates the popup on hover. The defualt is when click.</span>
+<span data-code-cell="annotated-cell-7" data-code-lines="1" data-code-annotation="1">This activates the popup on hover. The default is when click.</span>
 </dd>
 <dt data-target-cell="annotated-cell-7" data-target-annotation="2">2</dt>
 <dd>
@@ -585,7 +585,7 @@ Note
 <span id="cb2-34"><a href="#cb2-34"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"park"</span> ]</span>
 <span id="cb2-35"><a href="#cb2-35"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">159</span><span class="op">,</span> <span class="dv">247</span><span class="op">,</span> <span class="dv">7</span>) # green</span>
 <span id="cb2-36"><a href="#cb2-36"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"playground"</span> ]</span>
-<span id="cb2-37"><a href="#cb2-37"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">80</span><span class="op">,</span> <span class="dv">163</span><span class="op">,</span> <span class="dv">91</span>) # dark gren</span>
+<span id="cb2-37"><a href="#cb2-37"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">80</span><span class="op">,</span> <span class="dv">163</span><span class="op">,</span> <span class="dv">91</span>) # dark green</span>
 <span id="cb2-38"><a href="#cb2-38"></a>          <span class="op">-</span> [ <span class="op">==,</span> [ <span class="kw">get</span><span class="op">,</span> leisure ]<span class="op">,</span> <span class="st">"garden"</span> ]</span>
 <span id="cb2-39"><a href="#cb2-39"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">181</span><span class="op">,</span> <span class="dv">159</span><span class="op">,</span> <span class="dv">16</span>) # brown</span>
 <span id="cb2-40"><a href="#cb2-40"></a>          <span class="op">-</span> <span class="fu">rgb</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)</span>
@@ -608,7 +608,7 @@ Note
 <section id="sharing-you-ultra-map" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="sharing-you-ultra-map"><span class="header-section-number">7</span> Sharing you Ultra map</h2>
 <p>The last step is to share your resulting map.</p>
-<p>There are mutliple ways you can share it online, as a query or an interactive map.</p>
+<p>There are multiple ways you can share it online, as a query or an interactive map.</p>
 <p><span class="badge rounded-pill bg-primary">01</span> <em>Click on Share</em></p>
 <p>Click on the Share <img src="./images/ultra-share.png" height="30"></p>
 <p><span class="badge rounded-pill bg-primary">02</span> <em>Select how you want to share</em></p>
